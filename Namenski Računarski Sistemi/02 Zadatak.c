@@ -1,75 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-enum kop { sabiranje, oduzimanje, mnozenje, deljenje };
-float * Calculate(const char *inBuff);
+enum operacija{sabiranje, oduzimanje, mnozenje, deljenje};
 
-int main(int argc, char *argv[])
+float* Calculate(char* buffer)
 {
-		//zauzimamo bafer koji cemo proslediti funkciji
-	char *p_ParametarFunkcije = (char*)malloc(sizeof(char)+2 * sizeof(int));
-	char operacija;
+    int *operandi = (int *)(buffer + sizeof(char));
+    float *rezultat = (float *)malloc(sizeof(float));
 
-	printf("Unesite operaciju koju zelite da koristite : ");
-	scanf("%c", &operacija);
-    fflush(stdin);
+    if(buffer[0] == sabiranje)
+        *rezultat = (float)(1. * operandi[0] + operandi[1]);
+    else if(buffer[0] == oduzimanje)
+        *rezultat = (float)(1. * operandi[0] - operandi[1]);
+    else if(buffer[0] == mnozenje)
+        *rezultat = (float)(1. * operandi[0] * operandi[1]);
+    else
+        *rezultat = (float)(1. * operandi[0] / operandi[1]);
 
-	if (operacija == '+')
-		p_ParametarFunkcije[0] = sabiranje; //kod operacije u prvi bajt
-	else if (operacija == '-')
-		p_ParametarFunkcije[0] = oduzimanje;
-	else if (operacija == '*')
-		p_ParametarFunkcije[0] = mnozenje;
-	else if (operacija == '/')
-		p_ParametarFunkcije[0] = deljenje;
-	else return 0;
-
-	int op1, op2;
-
-	printf("Unesite prvi broj : ");
-	scanf("%d", &op1);
-	getchar();
-
-	printf("Unesite drugi broj : ");
-	scanf("%d", &op2);
-	getchar();
-
-	int *operand = (int *)(p_ParametarFunkcije + sizeof(char));
-
-		//smestamo operande na njihovu poyiciju u baferu
-	operand[0] = op1;
-	operand[1] = op2;
-
-	float *rezultat;
-
-	rezultat = Calculate(p_ParametarFunkcije);
-	printf("Resenje je : %f\n", *rezultat);
-	free(rezultat);
-	free(p_ParametarFunkcije);
-	return 0;
+    return rezultat;
 }
 
-float * Calculate(const char *inBuff)
+int main(void)
 {
-	int *operand = (int*)(inBuff + 1);
-	float *rez=NULL;
-	rez = (float*)malloc(sizeof(float));
+    char *bufferParametri = (char *)malloc(sizeof(char) + 2 * sizeof(int));
+    char operacija;
 
-	switch (inBuff[0])
-	{
-	case sabiranje:
-		*rez = (float)(operand[0] + operand[1]);
-		break;
-	case oduzimanje:
-		*rez = (float)(operand[0] - operand[1]);
-		break;
-	case mnozenje:
-		*rez = (float)(operand[0] * operand[1]);
-		break;
-	case deljenje:
-		*rez = (float)operand[0] / operand[1];
-		break;
-	}
+    printf("Unesite operaciju: ");
+    scanf("%c", &operacija);
 
-	return  rez;
+    if(operacija == '+')
+        bufferParametri[0] = sabiranje;
+    else if(operacija == '-')
+        bufferParametri[0] = oduzimanje;
+    else if(operacija == '*')
+        bufferParametri[0] = mnozenje;
+    else
+        bufferParametri[0] = deljenje;
+
+    int op1, op2;
+
+    printf("Unesite dva broja: ");
+    scanf("%d %d", &op1, &op2);
+
+    int *operandi = (int *)(bufferParametri + sizeof(char));
+    operandi[0] = op1, operandi[1] = op2;
+
+    float *rezultat = Calculate(bufferParametri);
+    printf("\nRezultat: %.3f", *rezultat);
+
+    free(bufferParametri);
+    free(rezultat);
+
+    return 0;
 }
