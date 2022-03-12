@@ -5,7 +5,7 @@ int* CalculateMinMax(char* buffer)
 {
     int *rez = malloc(2 * sizeof(int));
     int N = (int)(*buffer);
-    int *niz = (int *)(buffer + sizeof(char));
+    int *niz = (int *)(buffer + sizeof(short));
 
     rez[0] = niz[0];
     rez[1] = niz[0];
@@ -38,10 +38,10 @@ int main(void)
         scanf("%d", niz + i);
     }
 
-    char *buffer = malloc(N * sizeof(int) + sizeof(char));
+    char *buffer = malloc(N * sizeof(int) + sizeof(short));
     buffer[0] = (char)N;
 
-    int *brojevi = (int *)(buffer + sizeof(char));
+    int *brojevi = (int *)(buffer + sizeof(short));
     for(int i = 0; i < N; i++)
         brojevi[i] = niz[i];
 
