@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace PripremaK1
 {
@@ -6,32 +7,52 @@ namespace PripremaK1
     {
         public static string LoadFromFile(string putanja)
         {
+            TextReader txt = null;
             string sadrzaj = "";
 
-            using (TextReader txt = new StreamReader(File.Open(putanja, FileMode.Open)))
+            try
             {
-                while(true)
+                txt = new StreamReader(File.Open(putanja, FileMode.Open));
+
+                while (true)
                 {
                     string red = txt.ReadLine();
 
-                    if(red == null)
-                    {
+                    if (red == null)
                         break;
-                    }
 
                     sadrzaj += red;
                 }
-                txt.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("\n" + e.Message);
+            }
+            finally
+            {
+                if (txt != null)
+                    txt.Close();
             }
             return sadrzaj;
         }
 
         public static void SaveToFile(string zaUpis, string putanja)
         {
-            using(TextWriter tw = new StreamWriter(File.Open(putanja, FileMode.Create)))
+            TextWriter tw = null;
+
+            try
             {
+                tw = new StreamWriter(File.Open(putanja, FileMode.Create));
                 tw.WriteLine(zaUpis);
-                tw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\n" + e.Message);
+            }
+            finally
+            {
+                if (tw != null)
+                    tw.Close();
             }
         }
     }

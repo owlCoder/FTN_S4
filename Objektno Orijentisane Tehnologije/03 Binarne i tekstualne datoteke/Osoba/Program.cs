@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Osoba
 {
@@ -37,53 +38,96 @@ namespace Osoba
         }
         static void snimiOsobu(Osoba o)
         {
-            using (BinaryWriter binWriter = new BinaryWriter(File.Open("osoba.dat", FileMode.Append)))
+            BinaryWriter binWriter = null;
+
+            try
             {
+                binWriter = new BinaryWriter(File.Open("osobe.dat", FileMode.Create));
+
                 binWriter.Write(o.Ime);
                 binWriter.Write(o.Prezime);
                 binWriter.Write("\n");
-
-                binWriter.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("\nGRESKA PRILIKOM UPISA U BINARNU DATOTEKU!\nError: " + e);
+            }
+            finally
+            {
+                if(binWriter != null)
+                {
+                    binWriter.Close();
+                }
             }
         } 
 
         static void ucitajOsobu(Osoba o)
         {
-            using (BinaryReader binReader = new BinaryReader(File.Open("osoba.dat", FileMode.Open)))
+            BinaryReader binReader = null;
+        
+            try
             {
+                binReader = new BinaryReader(File.Open("osobe.dat", FileMode.Open));
+
                 string ime = binReader.ReadString();
                 string prezime = binReader.ReadString();
 
                 o.Ime = ime;
                 o.Prezime = prezime;
-
-                binReader.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\nGRESKA PRILIKOM CITANJA U BINARNU DATOTEKU!\nError: " + e);
+            }
+            finally
+            {
+                if (binReader != null)
+                {
+                    binReader.Close();
+                }
             }
         }
 
         static void snimiOsobe(List<Osoba> osobe)
         {
-            using (TextWriter txtWriter = new StreamWriter(File.Open("osobe.txt", FileMode.Append)))
+            TextWriter txtWriter = null;
+
+            try
             {
-                foreach(Osoba o in osobe)
+                txtWriter = new StreamWriter(File.Open("osobe.txt", FileMode.Append));
+
+                foreach (Osoba o in osobe)
                 {
                     txtWriter.WriteLine(o.Ime + " " + o.Prezime);
                 }
-
-                txtWriter.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\nGRESKA PRILIKOM PISANJA U TEKSTUALNU DATOTEKU!\nError: " + e);
+            }
+            finally
+            {
+                if (txtWriter != null)
+                {
+                    txtWriter.Close();
+                }
             }
         }
 
         static void ucitajOsobe(List<Osoba> osobe)
         {
-            using (TextReader txtReader = new StreamReader(File.Open("osobe.txt", FileMode.Open)))
+            TextReader txtReader = null;
+
+            try
             {
-                if(File.Exists("osobe.txt"))
+                txtReader = new StreamReader(File.Open("osobe.txt", FileMode.Open));
+
+                if (File.Exists("osobe.txt"))
                 {
                     while (true)
                     {
                         string str = txtReader.ReadLine();
-                        if(str == null)
+                        if (str == null)
                         {
                             break;
                         }
@@ -92,13 +136,16 @@ namespace Osoba
                         Osoba tmp = new Osoba(splitovano[0], splitovano[1]);
                         osobe.Add(tmp);
                     }
-
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("\nGRESKA PRILIKOM PISANJA U TEKSTUALNU DATOTEKU!\nError: " + e);
+            }
+            finally
+            {
+                if (txtReader != null)
                     txtReader.Close();
-                }
-                else
-                {
-                    Console.WriteLine("\nDatoteka ne postoji!");
-                }
             }
         }
     }

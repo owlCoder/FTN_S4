@@ -14,7 +14,10 @@ namespace Evidencija
             Console.WriteLine(evidencijaZaposlenih);
 
             Zaposleni best = evidencijaZaposlenih.NajboljiRadnik();
-            Console.WriteLine("Radnik sa najvecom platom: " + best.Id + ". " + best.Ime + " " + best.Prezime + " " + evidencijaZaposlenih.Plata(best.Id) + " RSD");
+            if(best != null)
+                Console.WriteLine("Radnik sa najvecom platom: " + best.Id + ". " + best.Ime + " " + best.Prezime + " " + evidencijaZaposlenih.Plata(best.Id) + " RSD");
+            else
+                Console.WriteLine("Lista je prazna!");
         }
     }
 }

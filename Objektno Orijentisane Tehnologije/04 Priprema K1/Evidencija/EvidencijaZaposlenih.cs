@@ -12,8 +12,8 @@ namespace Evidencija
 
         public EvidencijaZaposlenih(string nazivFirme, string adresa)
         {
-            this.NazivFirme = nazivFirme;
-            this.Adresa = adresa;
+            NazivFirme = nazivFirme;
+            Adresa = adresa;
             zaposleni = new Dictionary<int, Zaposleni>();
         }
 
@@ -36,44 +36,55 @@ namespace Evidencija
         }
         public void UcitajZaposlene(string putanja)
         {
-            if(File.Exists(putanja))
-            {
-                using (TextReader tr = new StreamReader(File.Open(putanja, FileMode.Open)))
-                {
-                    while(true)
-                    {
-                        string line = tr.ReadLine();
-                        if (line == null)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            string[] delovi = line.Split('|');
-                            Zaposleni tmp = new Zaposleni(Int32.Parse(delovi[0]), delovi[1], delovi[2], Int32.Parse(delovi[3]), Int32.Parse(delovi[4]), Int32.Parse(delovi[5]));
-                            zaposleni.Add(Int32.Parse(delovi[0]), tmp);
-                        }
-                    }
+            TextReader tr = null;
 
-                    if(tr != null)
-                        tr.Close();
+            try
+            {
+                tr = new StreamReader(File.Open(putanja, FileMode.Open));
+                
+                while (true)
+                {
+                    string line = tr.ReadLine();
+                    if (line == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        string[] delovi = line.Split('|');
+                        Zaposleni tmp = new Zaposleni(Int32.Parse(delovi[0]), delovi[1], delovi[2], Int32.Parse(delovi[3]), Int32.Parse(delovi[4]), Int32.Parse(delovi[5]));
+                        zaposleni.Add(Int32.Parse(delovi[0]), tmp);
+                    }
                 }
             }
-            else
+            catch
             {
-                Console.WriteLine("\nDatoteka ne postoji na putanji " + putanja + "!");
+                Console.WriteLine("Datoteka ne postoji!\n");
+            }
+            finally
+            {
+                if (tr != null)
+                    tr.Close();
             }
         }
 
         public Zaposleni NajboljiRadnik()
         {
-            Zaposleni max = zaposleni[1];
-            foreach (int id in zaposleni.Keys)
+            if (zaposleni.Count != 0)
             {
-                if (Plata(id) > Plata(max.Id))
-                    max = zaposleni[id];
+                Zaposleni max = zaposleni[1];
+                foreach (int id in zaposleni.Keys)
+                {
+                    if (Plata(id) > Plata(max.Id))
+                        max = zaposleni[id];
+                }
+                return max;
             }
-            return max;
+            else
+            {
+                return null;
+            }
+            
         }
 
         public override string ToString()
