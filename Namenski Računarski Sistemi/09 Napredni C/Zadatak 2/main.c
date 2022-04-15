@@ -1,13 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
 
 #include "ispit.h"
 #pragma pack(4)
 
+typedef bool polozenIspit(int);
+
+char *citanjePodatakaIUpisUBafer(void);
+int ucitajSifruIsputnogRokaBaza16();
+bool dobarZnak(char);
+int prebroj(char *, polozenIspit *);
+
+bool polozen(int ocena)
+{
+    return (ocena >= 6 ? true : false);
+}
+
 int main()
 {
-    char *buffer;
+    /// ZADATAK POD A
+    char *buffer = citanjePodatakaIUpisUBafer();
+    ispisPodatke(buffer);
+
+    /// ZADATAK POD B
+    /// UNOSI SE SIFRA ISPITNOG ROKA --> U SASTAVU POZIVA F-JE POD A
+
+    /// ZADATAK POD C
+    int polozenih = prebroj(buffer, polozen);
+
+    if(polozenih == 0)
+        printf("\nNEMA POLOZENIH ISPITA!\n");
+    else
+        printf("\nBROJ POLOZENIH ISPITA JE: %d ISPIT/A.\n", polozenih);
+
+    return 0;
+}
+
+char *citanjePodatakaIUpisUBafer()
+{
     int N, M;
 
     printf("Unesite dimenziju N\n>> ");
@@ -16,7 +49,7 @@ int main()
     printf("\nUnesite dimenziju M\n>> ");
     scanf("%d", &M);
 
-    buffer = (char *) malloc(2 * sizeof(int)
+    char *buffer = (char *) malloc(2 * sizeof(int)
                                + N * M * sizeof(ispit));
 
     /// DIREKTAN PRISTUP MEMORIJI
@@ -25,6 +58,7 @@ int main()
     char *podaci = buffer + 2 * sizeof(int);
 
     for(int i = 0; i < N; i++)
+    {
         for(int j = 0; j < M; j++)
         {
             /*
@@ -59,17 +93,79 @@ int main()
 
             printf("\tOcena: ");
             scanf(" %c", ocena);
-            fflush(stdin);
 
-            printf("\tSifra Ispitnog Roka: ");
-            scanf("%d", sifra);
+            /// ZADATAK POD B
+            *sifra = ucitajSifruIsputnogRokaBaza16();
 
-            fflush(stdin);
+            /// ZADATAK POD A
+            // printf("\tSifra Ispitnog Roka: ");
+            // scanf("%d", sifra);
+
             printf("\tProfesor: ");
-            gets(prof);
+            scanf(" %s", prof);
+        }
+    }
+
+        return buffer;
+}
+
+/// ZADATAK POD B
+int ucitajSifruIsputnogRokaBaza16()
+{
+    char ucitano[10];
+    int broj = -1, i;
+
+    while(true)
+    {
+        printf("\tSifra Ispitnog Roka: ");
+        scanf(" %s", ucitano);
+
+        for(i = 0; i < strlen(ucitano); i++)
+        {
+            if(dobarZnak(ucitano[i]))
+                continue;
+            else
+                break;
         }
 
-    ispisPodatke(buffer);
+        if(i == strlen(ucitano))
+            break;
+    }
 
-    return 0;
+    broj = (int) strtol(ucitano, NULL, 16);
+
+    return broj;
+}
+
+bool dobarZnak(char c)
+{
+    c = tolower(c);
+
+    return ( (c >= '0' && c <= '9') ||
+             (c == 'a' || c == 'b'  || c == 'c' || c == 'd' || c == 'e' || c == 'f'));
+}
+
+/// ZADATAK POD C
+int prebroj(char *buffer, polozenIspit *p)
+{
+    int brojac = 0;
+
+    /// DIREKTAN PRISTUP MEMORIJI
+    int N = *buffer, M = *(buffer + sizeof(int));
+    char *podaci = buffer + 2 * sizeof(int);
+
+    for(int i = 0; i < N; i++)
+    {
+        for(int j = 0; j < M; j++)
+        {
+
+            char  *ocena  = ((char  *) (podaci + (i * M + j) * sizeof(ispit) + 6));
+            int ocenaInt = *ocena - '0'; // iz char u int
+
+            if( p(ocenaInt) )
+                brojac++;
+        }
+    }
+
+    return brojac;
 }
