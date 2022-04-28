@@ -1,27 +1,32 @@
+/// 05 Zadatak 04
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int konverzija(char *s){
-   int rez, mask, i;
-   rez = 0;
-   i = strlen(s)-1;
-   mask = 1;
-   while (i>=0) {
-     if (s[i]=='1')
-        rez = rez | mask;
-     mask = mask << 1;
-     i--;
-   }
-   return rez;
+int Konverzija(char *binarni)
+{
+    int dekatni = 0, maska = 1, i = strlen(binarni) - 1;
+
+    while(i >= 0)
+    {
+        if(binarni[i] == '1')
+            dekatni |= maska;
+
+        maska <<= 1;
+        i--;
+    }
+
+    return dekatni;
 }
 
-int main()
+int main(void)
 {
-    int x;
-    char s[33];
-    printf("Unesite broj koji treba kovertovati: ");
-    scanf("%s", s);
-    x = konverzija(s);
-    printf("Dekadni broj izgleda ovako: %d\n", x);
+    char binarni[33];
+
+    printf("Unos binarnog broja\n>> ");
+    scanf("%s", binarni);
+
+    printf("\nDekadni broj\n>> %d\n", Konverzija(binarni));
+
     return 0;
 }

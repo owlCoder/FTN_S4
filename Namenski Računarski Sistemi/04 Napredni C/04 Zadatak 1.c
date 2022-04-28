@@ -1,23 +1,27 @@
+/// 04 Zadatak 01
 #include <stdio.h>
 #include <stdlib.h>
 
-char *konverzija(int x) {
-    char *bb = (char *)malloc(sizeof(int) * 4 + 1);
-    int n = sizeof(int) * 4 - 1;
+char *konverzija(int x)
+{
+    char *binarni = (char *) malloc(4 * sizeof(int) + 1);
+    int n = 4 * sizeof(int) - 1;
 
-    bb[0] = (x < 0 ? '1' : '0');
+    binarni[0] = x < 0 ? '1' : '0';
 
-    for(int i = n; i > 0; i--) {
+    for(int i = n; i > 0; i--)
+    {
         if(x % 2 == 0)
-            bb[i] = '0';
+            binarni[i] = '0';
         else
-            bb[i] = '1';
+            binarni[i] = '1';
 
         x /= 2;
     }
-    bb[n + 1] = '\0';
 
-    return bb;
+    binarni[n + 1] = '\0';
+
+    return binarni;
 }
 
 int main(void)

@@ -1,16 +1,17 @@
+/// 03 Zadatak 03
 #include <stdio.h>
 #include <stdlib.h>
 
-void copyLEToLE(int x, void* copy){
-   for(unsigned i=0; i<sizeof(x); i++){
-      *((char*)copy+i) = *((char *)&x +i);
-   }
+void copyLEToLE(int x, void *copy)
+{
+    for(unsigned i = 0; i < sizeof(x); i++)
+        *((char *) copy + i) = *((char *) &x + i);
 }
 
-void copyLEToBE(int x, void* copy){
-   for(unsigned i=0; i<sizeof(x); i++){
-      *((char*)copy+i) = *((char *)&x +sizeof(x)-1-i);
-   }
+void copyLEToBE(int x, void *copy)
+{
+    for(unsigned i = 0; i < sizeof(x); i++)
+        *((char *) copy + i) = *((char *) &x + sizeof(x) - i - 1);
 }
 
 int Count(char* buffer)
@@ -33,7 +34,7 @@ int Count(char* buffer)
     // Pronaci koliko je vecih brojeva u prvom nizu
     for(int i = 0; i < N; i++)
         if(brojevi[i] > brojevi[i + N])
-            ++brojac;
+           ++brojac;
 
     return brojac;
 }

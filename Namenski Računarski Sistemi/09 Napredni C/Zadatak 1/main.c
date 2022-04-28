@@ -2,73 +2,77 @@
 #include "list.h"
 #pragma pack(4)
 
-void izracunaj(char *buffer)
+void CopyLEToBE(int x, void *copy)
 {
-    int n = *((int *) buffer);
-    int i, rez, velicina = sizeof(izraz);
-    short br1, br2;
-    char op;
-
-    for(i = 0; i < n; i++)
-    {
-        br1 = *((short *)(buffer + sizeof(int) + i * velicina));
-        op = *(buffer + sizeof(int) + i * velicina + 2);
-        br2 = *((short*)(buffer + sizeof(int) + i * velicina + 4));
-
-        if (op == '+')
-            rez = br1 + br2;
-        else if (op == '-')
-            rez = br1 - br2;
-        else if (op == '*')
-            rez = br1 * br2;
-        else if (op == '/')
-            rez = br1 / br2;
-
-        *((int *)(buffer + sizeof(int) + i * velicina + 8)) = rez;
-    }
-};
-
-void copyLEToBE(int x, void* copy)
-{
-    for(int i=0; i<sizeof(x); i++)
-        *((char*)copy+i) = *((char *)&x + sizeof(x) - 1 - i);
+    for(int i = 0; i < sizeof(x); i++)
+        *((char *) copy + i) = *((char *) &x + sizeof(x) - i - 1);
 }
 
-node* izdvoj(char *buffer)
+void Izracunaj(char *buffer)
 {
-    int n = *((int*) buffer);
-    int i, rez, rezBE, velicina = sizeof(izraz);
-    node* l;
-    init(&l);
-
-    for(i=0; i < n; i++)
+    for(int i = 0; i < *((int *) buffer); i++)
     {
-        rez = *((short*)(buffer + sizeof(int) + i * velicina + 8));
-        copyLEToBE(rez, &rezBE);
-        addEnd(&l, rezBE);
+        izraz tmp;
+
+        tmp.broj1     = *((short *) (buffer + sizeof(int) + i * sizeof(izraz)));
+        tmp.operacija = *(buffer + sizeof(int) + i * sizeof(izraz) + 2);
+        tmp.broj2     = *((short *) (buffer + sizeof(int) + i * sizeof(izraz) + 4) );
+        tmp.rezultat  = 0;
+
+        if(tmp.operacija == '+')
+            tmp.rezultat = tmp.broj1 + tmp.broj2;
+        else if(tmp.operacija == '-')
+            tmp.rezultat = tmp.broj1 - tmp.broj2;
+        else if(tmp.operacija == '*')
+            tmp.rezultat = tmp.broj1 * tmp.broj2;
+        else if(tmp.operacija == '/')
+            tmp.rezultat = tmp.broj1 / tmp.broj2;
+
+        *((int *) (buffer + sizeof(int) + i * sizeof(izraz) + 8)) = tmp.rezultat;
     }
-    return l;
+}
+
+node *Izdvoj(char *buffer)
+{
+    int n = *((int *) buffer);
+    int rezultat, rezultatBigEndian;
+    node *head;
+
+    init(&head);
+
+    for(int i = 0; i < *((int *) buffer); i++)
+    {
+        rezultat = *((int *)(buffer + sizeof(int) + i * sizeof(izraz) + 8));
+        CopyLEToBE(rezultat, &rezultatBigEndian);
+        addEnd(&head, rezultatBigEndian);
+    }
+
+    return head;
 }
 
 int main(void)
 {
-    char *buffer = napraviNiz();
-    ispisNiz(buffer);
-    izracunaj(buffer);
-    ispisNiz(buffer);
+    int rezultat, rezultatBigEndian;
+    char *buffer = NapraviNiz();
 
-    node *l = izdvoj(buffer);
-    node *temp = l -> next;
-    int rezBE, rez;
+    IspisiNiz(buffer);
+    Izracunaj(buffer);
+    IspisiNiz(buffer);
 
-    printf("\nRezultati izraza su: ");
-    while (temp != l)
+    node *head = Izdvoj(buffer);
+    node *temp = head -> next;
+
+    printf("Rezultati izraza su: ");
+    while(temp != head)
     {
-        rezBE = temp -> data;
-        copyLEToBE(rezBE, &rez);
-        printf("%d ", rez);
+        rezultatBigEndian = temp -> data;
+        CopyLEToBE(rezultatBigEndian, &rezultat);
         temp = temp -> next;
+
+        printf("%d ", rezultat);
     }
+
+    printf("\n");
 
     return 0;
 }

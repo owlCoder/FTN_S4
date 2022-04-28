@@ -1,6 +1,6 @@
+/// 06 Zadatak 01
 #include <stdio.h>
 #include <stdlib.h>
-
 #pragma pack(4)
 
 typedef struct
@@ -12,26 +12,32 @@ typedef struct
     char JMBG[14];
 } Osoba;
 
-void ispisStariju(char *buffer) {
+void ispisStariju(char *buffer)
+{
     short *dan1    = (short *) &buffer[26];
     short *mesec1  = (short *) &buffer[28];
     short *godina1 = (short *) &buffer[30];
 
-    int velicina = sizeof(Osoba);
+    short *dan2    = (short *) &buffer[26 + sizeof(Osoba)];
+    short *mesec2  = (short *) &buffer[28 + sizeof(Osoba)];
+    short *godina2 = (short *) &buffer[30 + sizeof(Osoba)];
 
-    short *dan2    = (short *) &buffer[26 + velicina];
-    short *mesec2  = (short *) &buffer[28 + velicina];
-    short *godina2 = (short *) &buffer[30 + velicina];
-
-    if(*godina1 < *godina2 ||
-       (*godina1 == *godina2 && *mesec1 < *mesec2) ||
-       (*godina1 == *godina2 && *mesec1 == *mesec2 && *dan1 < *dan2) )
-        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s",
-                buffer, (buffer + 12), *(buffer + 24), (buffer + 32));
+    if(*godina1  < *godina2 ||
+       *godina1 == *godina2 &&  *mesec1 <  *mesec2 ||
+       *godina1 == *godina2 &&  *mesec1 == *mesec2 && *dan1 < *dan2)
+       printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s\n",
+               buffer, 
+              (buffer + 12), 
+             *(buffer + 24), 
+              (buffer + 32));
     else
-        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s",
-                (buffer + velicina), (buffer + 12 + velicina), *(buffer + 24 + velicina), (buffer + 32 + velicina));
+        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s\n",
+               (buffer + sizeof(Osoba)), 
+               (buffer + 12 + sizeof(Osoba)), 
+              *(buffer + 24 + sizeof(Osoba)), 
+               (buffer + 32 + sizeof(Osoba)));
 }
+
 int main(void)
 {
     Osoba o[2];
@@ -56,7 +62,7 @@ int main(void)
         "0123666789123"
     };
 
-    ispisStariju((char *)o);
+    ispisStariju((char *) o);
 
     return 0;
 }

@@ -1,7 +1,7 @@
+/// 06 Zadatak 02
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #pragma pack(4)
 
 typedef struct
@@ -13,29 +13,33 @@ typedef struct
     char JMBG[14];
 } Osoba;
 
-void ispisStariju(char *buffer) {
-    short brojOsoba = *(short *)buffer;
-    int velicina = sizeof(Osoba), maxOsobaIndex = 0;
+void ispisStariju(char *buffer)
+{
+    int maxOsobaIndex = 0;
 
-    for(int i = 1; i < brojOsoba; i++) {
-        short *dan1    = (short *) &buffer[26 + maxOsobaIndex * velicina + 2];
-        short *mesec1  = (short *) &buffer[28 + maxOsobaIndex * velicina + 2];
-        short *godina1 = (short *) &buffer[30 + maxOsobaIndex * velicina + 2];
+    for(int i = 1; i < *(short *) buffer; i++)
+    {
+        short *dan1    = (short *) &buffer[26 + maxOsobaIndex * sizeof(Osoba) + sizeof(short)];
+        short *mesec1  = (short *) &buffer[28 + maxOsobaIndex * sizeof(Osoba) + sizeof(short)];
+        short *godina1 = (short *) &buffer[30 + maxOsobaIndex * sizeof(Osoba) + sizeof(short)];
 
-        short *dan2    = (short *) &buffer[26 + i * velicina + 2];
-        short *mesec2  = (short *) &buffer[28 + i * velicina + 2];
-        short *godina2 = (short *) &buffer[30 + i * velicina + 2];
+        short *dan2    = (short *) &buffer[26 +             i * sizeof(Osoba) + sizeof(short)];
+        short *mesec2  = (short *) &buffer[28 +             i * sizeof(Osoba) + sizeof(short)];
+        short *godina2 = (short *) &buffer[30 +             i * sizeof(Osoba) + sizeof(short)];
 
-        if(!(*godina1 < *godina2 ||
-       (*godina1 == *godina2 && *mesec1 < *mesec2) ||
-       (*godina1 == *godina2 && *mesec1 == *mesec2 && *dan1 < *dan2) ))
+        if(!(*godina1  < *godina2 ||
+             *godina1 == *godina2 &&  *mesec1 <  *mesec2 ||
+             *godina1 == *godina2 &&  *mesec1 == *mesec2 && *dan1 < *dan2))
             maxOsobaIndex = i;
     }
-    const unsigned index = maxOsobaIndex * velicina;
-    printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s",
-            buffer + index + 2, (buffer + index + 14), *(buffer + index + 26), (buffer + index + 34));
 
+    printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s\n",
+           buffer + maxOsobaIndex * sizeof(Osoba) + sizeof(short),
+           buffer + maxOsobaIndex * sizeof(Osoba) + sizeof(short) + 12,
+         *(buffer + maxOsobaIndex * sizeof(Osoba) + sizeof(short) + 24),
+           buffer + maxOsobaIndex * sizeof(Osoba) + sizeof(short) + 32);
 }
+
 int main(void)
 {
     Osoba o[3];
@@ -57,7 +61,7 @@ int main(void)
         'Z',
         15,
         1,
-        2001,
+        2000,
         "0123666789123"
     };
 
@@ -65,16 +69,13 @@ int main(void)
         "Marijana",
         "Lenic",
         'Z',
-        21,
         1,
-        2001,
+        1,
+        2002,
         "0163666789123"
     };
-
-    const short brojOsoba = 3;
-    short *br = (short *)buffer;
-
-    *br = brojOsoba;
+    
+    *((short *) buffer) = 3;
     memcpy(buffer + 2, &o, sizeof(o));
 
     ispisStariju(buffer);

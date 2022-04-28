@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+typedef struct Izraz
+{
     short broj1;
-    char op;
+    char  operacija;
     short broj2;
-    int rezultat;
+    int   rezultat;
 } izraz;
 
 void ispisNiz(char *buffer);

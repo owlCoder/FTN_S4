@@ -1,34 +1,45 @@
+/// 05 Zadatak 03
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char* konverzija(int n){
-   char s[33], *rez;
-   int i, mask, num;
-   s[32] = 0;
-   mask = 1;
-   num = 0;
-   for (i=0; i<32; i++){
-      if ((n&mask) == 0)
-        s[31-i] = '0';
-      else{
-        s[31-i] = '1';
-        num = i;
-      }
-      mask = mask << 1;
-   }
-   rez = (char *) malloc(num+2);
-   memcpy(rez, &s[31-num], num+2);
-   return rez;
+char *Konverzija(int n)
+{
+    char binarni[33], *bin;
+    int mask  = 1, indeks_poslednje_1 = 0;
+
+    binarni[32] = '\0';
+
+    for(int i = 0; i < 32; i++)
+    {
+        if( (n & mask) == 0)
+            binarni[31 - i] = '0';
+        else
+        {
+            binarni[31 - i] = '1';
+            indeks_poslednje_1 = i;
+        }
+        mask <<= 1;
+    }
+
+    bin = (char *) malloc(indeks_poslednje_1 + 2);
+    memcpy(bin, &binarni[31 - indeks_poslednje_1], indeks_poslednje_1 + 2);
+
+    return bin;
 }
 
-int main()
+int main(void)
 {
     int n;
-    char *s;
-    printf("Unesite broj koji treba kovertovati: ");
+    char *binarni;
+
+    printf("Unos broja\n>> ");
     scanf("%d", &n);
-    s = konverzija(n);
-    printf("Binarni broj izgleda ovako: %s\n", s);
+
+    binarni = Konverzija(n);
+    printf("\nBinarno\n>> %s\n", binarni);
+
+    free(binarni);
+
     return 0;
 }

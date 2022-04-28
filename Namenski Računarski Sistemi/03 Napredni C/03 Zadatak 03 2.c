@@ -1,89 +1,87 @@
+/// 03 Zadatak 02
 #include <stdio.h>
 #include <stdlib.h>
 
-void copyLEToLE(int x, void* copy){
-   for(unsigned i=0; i<sizeof(x); i++){
-      *((char*)copy+i) = *((char *)&x +i);
-   }
+void copyLEToLE(int x, void *copy)
+{
+    for(unsigned i = 0; i < sizeof(x); i++)
+        *((char *) copy + i) = *((char *) &x + i);
 }
 
-void copyLEToBE(int x, void* copy){
-   for(unsigned i=0; i<sizeof(x); i++){
-      *((char*)copy+i) = *((char *)&x +sizeof(x)-1-i);
-   }
+void copyLEToBE(int x, void *copy)
+{
+    for(unsigned i = 0; i < sizeof(x); i++)
+        *((char *) copy + i) = *((char *) &x + sizeof(x) - i - 1);
+}
+
+void LE_BE(char *buffer)
+{
+    int broj1 = *((int *)(buffer + 2 * sizeof(char)));
+    int broj2 = *((int *)(buffer + 2 * sizeof(char) + sizeof(int)));
+
+    if(*buffer == 'B')
+    {
+        copyLEToBE(broj1, buffer + 2 * sizeof(char));
+        copyLEToBE(broj2, buffer + 2 * sizeof(char) + sizeof(int));
+    }
+    else
+    {
+        copyLEToLE(broj1, buffer + 2 * sizeof(char));
+        copyLEToLE(broj2, buffer + 2 * sizeof(char) + sizeof(int));
+    }
 }
 
 float Calculate(char *buffer)
 {
-    float rez = 0.;
-    int *brojevi = (int *)(buffer + 2);
+    float rezultat = 0.0;
+    int broj1 = *((int *)(buffer + 2 * sizeof(char)));
+    int broj2 = *((int *)(buffer + 2 * sizeof(char) + sizeof(int)));
 
-    int b1 = brojevi[0], b2 = brojevi[1];
-    if(buffer[0] == 'B') {
-        copyLEToBE(b1, buffer + 2);
-        copyLEToBE(b2, buffer + 6);
-    }
+    LE_BE(buffer);
 
-    if(buffer[1] == '+')
-        rez = brojevi[0] + brojevi[1];
-    else if(buffer[1] == '-')
-        rez = brojevi[0] - brojevi[1];
-    else if(buffer[1] == '*')
-        rez = brojevi[0] * brojevi[1];
+    broj1 = *((int *) (buffer + 2 * sizeof(char)));
+    broj2 = *((int *) (buffer + 2 * sizeof(char) + sizeof(int)));
+
+    if( *(buffer + sizeof(char)) == '+')
+        rezultat = broj1 + broj2;
+    else if( *(buffer + sizeof(char)) == '-')
+        rezultat = broj1 - broj2;
+    else if( *(buffer + sizeof(char)) == '*')
+        rezultat = broj1 * broj2;
     else
-        rez = 1. * brojevi[0] / brojevi[1];
+        rezultat = broj1 / broj2;
 
-    float r;
-    if(buffer[0] == 'B')
-        copyLEToBE(*(int*)&rez, &r);
-    else
-        copyLEToLE(*(int *)&rez, &r);
-
-    return r;
+    return rezultat;
 }
 
 int main(void)
 {
-    char *buffer = (char *)malloc(10);
-    char LB, OPERACIJA;
+    char *buffer = (char *) malloc(2 * sizeof(char) + 2 * sizeof(int));
+    float rezultat, r;
 
     do {
         printf("Unesite L ili B: ");
-        scanf("%c", &LB);
+        scanf(" %c", buffer);
         fflush(stdin);
-    } while(LB != 'L' && LB != 'B');
+    } while(*buffer != 'L' && *buffer != 'B');
 
-    buffer[0] = LB;
-
-    printf("\n");
      do {
         printf("Unesite +, -, *, /: ");
-        scanf("%c", &OPERACIJA);
+        scanf(" %c", (buffer + sizeof(char)));
         fflush(stdin);
-    } while(OPERACIJA != '+' && OPERACIJA != '-'
-                      && OPERACIJA != '*' && OPERACIJA != '/');
-    buffer[1] = OPERACIJA;
+    } while(*(buffer + sizeof(char)) != '+' && *(buffer + sizeof(char)) != '-'
+         && *(buffer + sizeof(char)) != '*' && *(buffer + sizeof(char)) != '/');
 
-    int broj1, broj2;
+    printf("Unesite 2 broja: ");
+    scanf("%d %d", (int *)(buffer + 2 * sizeof(char)),
+                   (int *)(buffer + 2 * sizeof(char) + sizeof(int)));
 
-    printf("\nUnesite 2 broja: ");
-    scanf("%d %d", &broj1, &broj2);
+    LE_BE(buffer);
 
-    int *brojevi = (int *)(buffer + 2);
-    if(LB == 'B') {
-        copyLEToBE(broj1, brojevi);
-        copyLEToBE(broj2, brojevi + 1);
-    }
-    else {
-        copyLEToLE(broj1, brojevi);
-        copyLEToLE(broj2, brojevi + 1);
-    }
+    rezultat = Calculate(buffer);
+    r = rezultat;
 
-    float rezultat = Calculate(buffer), r = rezultat;
-    if(buffer[0] == 'B')
-        copyLEToBE(*(int*)&rezultat, &r);
-
-    printf("\nRezultat: %.2f", r);
+    printf("\nRezultat: %.2f\n", r);
 
     free(buffer);
 

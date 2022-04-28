@@ -1,70 +1,99 @@
 #include <stdio.h>
 #include "BitsBuffer.h"
 
-int next(int x){
-  return (x%bitsize);
+int next(int x)
+{
+    return (x % BITS_SIZE);
 }
 
-void initbuff(bitbuffer *b) {
-  b->count = 0;
-  b->first = -1;
-  b->last = -1;
+void init_buff(bits_buffer *buffer)
+{
+    buffer -> count =  0;
+    buffer -> first = -1;
+    buffer -> last  = -1;
 }
 
-int isEmpty(bitbuffer b) {
-    return b.count==0;
+int isEmpty(bits_buffer buffer)
+{
+    return buffer.count == 0;
 }
 
-int isFull(bitbuffer b) {
-    return b.count==bitsize;
+int isFull(bits_buffer buffer)
+{
+    return buffer.count == BITS_SIZE;
 }
 
-void setBit(char *ch, int bitindex, int num) {
-   int mask = 0x80>>bitindex;
-   if (num==0) {
-      *ch = (*ch) & ~mask;
-   } else {
-      *ch = (*ch) | mask;
-   }
+void setBit(char *ch, int bit_index, int num)
+{
+    int mask = 0x80 >> bit_index;
+
+    if(num == 0)
+        *ch = (*ch) & ~mask;
+    else
+        *ch = (*ch) | mask;
 }
 
-int isSetBit(char ch, int bitindex) {
-   int mask = 0x80>>bitindex;
-   return (ch & mask)!=0;
+int isSetBit(char ch, int bit_index)
+{
+    int mask = 0x80 >> bit_index;
+
+    return (ch & mask) != 0;
 }
 
-void push(bitbuffer *b, int num){
-   if (b->count==bitsize) {
-      printf("Buffer full!!!\n");
-      return;
-   } else if (b->count==0) {
-      b->first=0;
-      b->last=0;
-   } else
-      b->last++;
-   b->count++;
-   int index = b->last;
-   index = index>>3; // deljenje sa 8
-   int bitindex = b->last;
-   bitindex = bitindex & 0x07; // ostatak pri deljenju sa 9
-   setBit(&b->buffer[index], bitindex, num);
+void push(bits_buffer *buffer, int num)
+{
+    if(buffer -> count == BITS_SIZE)
+    {
+        printf("\nBuffer je pun!\n");
+        return;
+    }
+    else if(buffer -> count == 0)
+    {
+        buffer -> first = 0;
+        buffer -> last  = 0;
+    }
+    else
+        buffer -> last++;
+
+    buffer -> count++;
+
+    int index     = buffer -> last;
+    int bit_index = buffer -> last;
+
+    index >>= 3;       // deljenje sa 2^3 = 8
+    bit_index &= 0x07; // ostatak pri deljenju sa 9
+
+    setBit(&buffer -> buffer[index], bit_index, num);
 }
 
-int pop(bitbuffer *b){
-   if (b->count==0) {
-      printf("Buffer empty!!!\n");
-      return 0;
-   }
-   int index = b->first;
-   index = index>>3;
-   int bitindex = b->first%8;
-   bitindex = bitindex & 0x07;
-   int bit = isSetBit(b->buffer[index], bitindex);
-   b->count--;
-   if (b->count==0) {
-     b->first=0;
-     b->last=0;
-   } else
-     b->first++;
-   return bit;
+int pop(bits_buffer *buffer)
+{
+    if(buffer -> count == 0)
+    {
+        printf("\nBuffer je prazan!\n");
+        return 0;
+    }
+    else
+    {
+        int index = buffer -> first;
+        int bit_index = buffer -> first % 8;
+
+        index >>= 3;       // deljenje sa 2^3 = 8
+        bit_index &= 0x07; // ostatak pri deljenju sa 9
+
+        int bit = isSetBit(buffer -> buffer[index], bit_index);
+        buffer -> count--;
+
+        if(buffer -> count == 0)
+        {
+            buffer -> first = 0;
+            buffer -> last  = 0;
+        }
+        else
+        {
+            buffer -> first++;
+        }
+
+        return bit;
+    }
 }

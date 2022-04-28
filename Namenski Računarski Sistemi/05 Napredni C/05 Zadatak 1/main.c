@@ -3,18 +3,18 @@
 #include <string.h>
 #include "BitsBuffer.h"
 
-int main()
+int main(void)
 {
-    bitbuffer b;
-    initbuff(&b);
-    char message[] = "010010";
-    for(int i=0; i<strlen(message); i++){
-        push(&b, message[i]-'0');
-    }
+    bits_buffer buffer;
+    char poruka[] = "0100100111100";
 
-    while(!isEmpty(b)) {
-       int num = pop(&b);
-       printf("%d", num);
-    }
+    init_buff(&buffer);
+
+    for(int i = 0; i < strlen(poruka); i++)
+        push(&buffer, poruka[i] - '0');
+
+    while(!isEmpty(buffer))
+        printf("%d", pop(&buffer));
+
     return 0;
 }

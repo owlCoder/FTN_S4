@@ -1,56 +1,49 @@
+/// 02 Zadatak 02
 #include <stdio.h>
 #include <stdlib.h>
 
-int* CalculateMinMax(char* buffer)
+int *CalculateMinMax(char *buffer)
 {
-    int *rez = malloc(2 * sizeof(int));
-    int N = (int)(*buffer);
-    int *niz = (int *)(buffer + sizeof(short));
+    int *rezultat = (int *) malloc(2 * sizeof(int));
+    short N = *((short *) buffer);
 
-    rez[0] = niz[0];
-    rez[1] = niz[0];
+    rezultat[0] = *((int *)(buffer + sizeof(short)));
+    rezultat[1] = *((int *)(buffer + sizeof(short)));
 
-    for(int i = 1; i < N; i++) {
-        if(niz[i] < rez[0])
-            rez[0] = niz[i];
+    for(short i = 1; i < N; i++)
+    {
+        int brojevi = *((int *)(buffer + sizeof(short) + i * sizeof(int)));
+        if(brojevi < rezultat[0])
+            rezultat[0] = brojevi;
 
-        if(niz[i] > rez[1])
-            rez[1] = niz[i];
+        if(brojevi > rezultat[1])
+            rezultat[1] = brojevi;
     }
-    return rez;
+    return rezultat;
 }
 
 int main(void)
 {
-    short N;
+    short N = 0;
+    char *buffer = NULL;
 
-    do {
-        printf("Unesite N\n>> ");
+    do
+    {
+        printf("\nUnesite N\n>> ");
         scanf("%hu", &N);
-        printf("\n");
     } while(N <= 1);
 
-    int *niz = malloc(N * sizeof(int));
+    buffer = (char *) malloc(N * sizeof(int) + sizeof(short));
+    *((short *)(buffer)) = N;
 
-    printf("Unos niza\n");
-    for(int i = 0; i < N; i++) {
-        printf("\tniz[%d] = ", i);
-        scanf("%d", niz + i);
-    }
-
-    char *buffer = malloc(N * sizeof(int) + sizeof(short));
-    buffer[0] = (char)N;
-
-    int *brojevi = (int *)(buffer + sizeof(short));
+    printf("\nUnos niza\n>> ");
     for(int i = 0; i < N; i++)
-        brojevi[i] = niz[i];
+        scanf("%d", ((int *)(buffer + sizeof(short) + i * sizeof(int))));
 
-    free(niz);
+    int *rezultat = CalculateMinMax(buffer);
+    printf("\nMin = %d, Max = %d\n", rezultat[0], rezultat[1]);
 
-    int *rez = CalculateMinMax(buffer);
-    printf("\nMin = %d, Max = %d\n", rez[0], rez[1]);
-
-    free(rez);
+    free(rezultat);
 
     return 0;
 }

@@ -4,99 +4,91 @@
 
 #include "list.h"
 
-node *izdvoji(char *buffer)
+node *Izdvoji(char *buffer)
 {
     node *studenti;
     init(&studenti);
 
-    int brojStudenta = *(int *)buffer;
-    student *tmp = (student *)(buffer + 4);
+    student *tmp = (student *)(buffer + sizeof(int));
 
-    for(int i = 0; i < brojStudenta; i++, tmp++) {
-        int brojIspita = tmp -> brIspita;
+    for(int i = 0; i < *((int *) buffer); i++)
+    {
+        int brojIspita = tmp -> brojIspita;
         int j = 0;
 
-        while(j < brojIspita) {
-            if( (strcmp(tmp -> ispiti[j].imeIspita, "NRS") == 0) ) //&& tmp -> ispiti[i].ocena >= 6) {
+        while(j < brojIspita)
+        {
+            if(strcmp(tmp -> ispiti[j].imeIspita, "NRS") == 0)
             {
                 addBegin(studenti, *tmp);
                 break;
             }
             j++;
         }
+
+        tmp++;
     }
+
     return studenti;
 }
 
-void ispisiStudente(node *l)
+void IspisiStudente(node *head)
 {
-    // ispis studenata
-    node *t = l -> next;
-    while (t != l) {
-        printf("\nIme: %s\n", t -> data.ime);
-        printf("Prezime: %s\n", t -> data.prezime);
-        printf("INDEKS: %s\n", t -> data.brIndeksa);
-        printf("BR ISPITA: %d\n", t -> data.brIspita);
-        t = t -> next;
+    node *trenutni = head -> next;
+
+    while(trenutni != head)
+    {
+        printf("\nIme: %s\n",       trenutni -> data.ime);
+        printf("Prezime: %s\n",     trenutni -> data.prezime);
+        printf("Indeks: %s\n",      trenutni -> data.brojIndeksa);
+        printf("Broj ispita: %d\n", trenutni -> data.brojIspita);
+
+        trenutni = trenutni -> next;
     }
 }
 
 int main(void)
 {
-    node *l;
+    node *head;
     student st;
-    int n, i;
-    init(&l);
+    int n;
 
-    // ucitavanje studenata
-    printf("Unesite broj studenata: ");
-    scanf("%d", &n);
+    do 
+    {
+        printf("Unesite broj studenata: ");
+        scanf("%d", &n);
+    } while(n < 1);
+    
+    char *buffer = (char *) malloc(n * sizeof(student) + sizeof(int));
+    *((int *) buffer) = n;
+    student *upis = (student *)(buffer + sizeof(int));
 
-    char *buffer = (char *)malloc(n * sizeof(student) + 4);
-    int *brN = (int *)buffer;
+    for(int i = 0; i < *((int *) buffer); i++)
+    {
+        printf("\nUnesite pdoatke o studentu broj %d: \n", i + 1);
 
-    *brN = n;
+        printf("\tIme: ");         scanf("%s",  st.ime);
+        printf("\tPrezime: ");     scanf("%s",  st.prezime);
+        printf("\tIndeks: ");      scanf("%s",  st.brojIndeksa);
+        printf("\tBroj ispita: "); scanf("%d", &st.brojIspita);
 
-    student *upis = (student *)(buffer + 4);
-
-    for (i = 0; i < n; i++) {
-        printf("\nUnesite podatke o studentu broj %d: \n", i + 1);
-
-        printf("\tIme: ");
-        scanf("%s", st.ime);
-
-        printf("\tPrezime: ");
-        scanf("%s", st.prezime);
-
-        printf("\tIndeks: ");
-        scanf("%s", st.brIndeksa);
-
-        printf("\tBroj ispita: ");
-        scanf("%d", &st.brIspita);
-
-        printf("\n\t------- Unos podataka o ispitima -------");
-        for(int i = 0; i < st.brIspita; i++) {
-            printf("\n\tNaziv ispita -> ");
+        printf("\n\t------- UNOS PODATAKA O ISPITIMA --------");
+        for(int j = 0; j < st.brojIspita; j++)
+        {
+            printf("\n\tNaziv ispita: ");
             fflush(stdin);
+            scanf("%20s", st.ispiti[j].imeIspita);
 
-            short ocena;
-            char naziv[20];
-
-            gets(naziv);
-            printf("\tOcena -> ");
-            scanf("%hd", &ocena);
-
-            strcpy(st.ispiti[i].imeIspita, naziv);
-            st.ispiti[i].ocena = ocena;
+            printf("\tOcena: ");
+            scanf("%hd", &st.ispiti[j].ocena);
         }
 
         upis[i] = st;
     }
 
-    node *studenti = izdvoji(buffer);
-
+    node *studenti = Izdvoji(buffer);
     printf("\n------------------------ STUDENTI ------------------------\n");
-    ispisiStudente(studenti);
+    IspisiStudente(studenti);
 
     free(buffer);
 

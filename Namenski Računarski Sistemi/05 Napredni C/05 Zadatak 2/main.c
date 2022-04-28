@@ -3,22 +3,26 @@
 #include <string.h>
 #include "BitsBuffer.h"
 
-int main()
+int main(void)
 {
-    bitbuffer b;
-    initbuff(&b);
-    char message[] = "010010000110010101101100011011000110111100100000011101110110111101110010011011000110010000100001";
-    for(int i=0; i<strlen(message); i++){
-        push(&b, message[i]-'0');
-    }
+    bits_buffer buffer;
+    char poruka[] = "010010000110010101101100011011000110111100100000011101110110111101110010011011000110010000100001";
+    char c;
 
-    while(!isEmpty(b)) {
-        char c;
-        for (int i=0; i<8; i++){
-            int num = pop(&b);
+    init_buff(&buffer);
+
+    for(int i = 0; i < strlen(poruka); i++)
+        push(&buffer, poruka[i] - '0');
+
+    while(!isEmpty(buffer))
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            int num =  pop(&buffer);
             setBit(&c, i, num);
         }
         printf("%c", c);
     }
+        
     return 0;
 }

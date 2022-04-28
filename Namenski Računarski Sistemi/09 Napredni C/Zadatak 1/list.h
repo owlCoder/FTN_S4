@@ -6,10 +6,12 @@
 
 // kruzna lista sa granicnikom
 
-typedef struct node {
+typedef struct Node
+{
     int data;
-    struct node *next;
+    struct Node *next;
 } node;
+
 
 void init(node **l);
 void addBegin(node *l, int s);
