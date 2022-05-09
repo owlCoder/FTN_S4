@@ -88,7 +88,7 @@ bool proveri_obrnutost(vector<float> a, vector<float> b)
     if(zbirPodelaElemenata < velicina)              /// ako je podela bila neravnomerna, poslednja nit ce obradjivati od prethodnog kraja niza a
     {                                               /// pa sve do kraja niza a tj a.cend();
         niti[brojPodela] = thread(jesu_li_isti_elementi,
-                                  pocetakNizaA + velicinaPodele[brojPodela - 1],
+                                  pocetakNizaA + velicinaPodele[brojPodela],
                                   a.cend(), krajNizaB - velicinaPodele[brojPodela], ref(rezultati[brojPodela]));
         niti[brojPodela].join();
     }
