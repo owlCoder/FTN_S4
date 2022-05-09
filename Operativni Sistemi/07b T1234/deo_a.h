@@ -49,7 +49,7 @@ bool proveri_obrnutost(vector<float> a, vector<float> b)
     int brojPodela = 0;
     int zbirPodelaElemenata = 0;
     int velicina = (int) a.size();
-    bool rezultati[brojPodela + 1];                  /// + 1 u slucaju da podela nije ravnomerna
+    bool rezultati[velicina + 1];                    /// + 1 u slucaju da podela nije ravnomerna
 
                                                      /// odredjuje se koliko cemo podela imati, ako niz ima 10 elemenata, jedna od podela je
                                                      /// 3 + 3 + 1 + 3, gde nulta, prva i treca nit obradjuju po 3 elementa vektora, dok druga nit obradjuje jedan element
