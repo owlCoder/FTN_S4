@@ -89,7 +89,7 @@ bool proveri_obrnutost(vector<float> a, vector<float> b)
     {                                               /// pa sve do kraja niza a tj a.cend();
         niti[brojPodela] = thread(jesu_li_isti_elementi,
                                   pocetakNizaA + velicinaPodele[brojPodela],
-                                  a.cend(), krajNizaB - velicinaPodele[brojPodela], ref(rezultati[brojPodela]));
+                                  a.cend(), krajNizaB + velicinaPodele[brojPodela], ref(rezultati[brojPodela]));
         niti[brojPodela].join();
     }
 
