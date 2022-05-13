@@ -17,8 +17,6 @@ void potenciometar(int id, void *tptr)
 {
     int sensorValue = analogRead(analogInPin);
 
-    if(brojac > 5)
-    {
         int min = merenja[0];
         int max = merenja[0];
         
@@ -32,11 +30,15 @@ void potenciometar(int id, void *tptr)
         }
 
         if(max - min > 200)
+        {
             Serial.println("Doslo je do vece promene na potenciometru!");
-        
-        brojac = 0;
-    }
-    merenja[brojac++] = sensorValue;
+            
+            for(int j = 0; j < 5; j++)
+                  merenja[j] = merenja[brojac];
+        }
+   
+    brojac=(brojac + 1) % 5;
+    merenja[brojac] = sensorValue;
 }
 
 void setup()
