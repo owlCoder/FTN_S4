@@ -1,3 +1,11 @@
+/*
+   Napisati program koji učitava cifru po cifru sa serijskog ulaza i
+   ispisuje te cifre u binarnom sistemu na lampicama na pinovima 29, 28, 27 i
+   26.
+   
+   - Ukoliko je na primer ucitana cifra 5, ispisati 0101, tj. upalite lampice 28 i 26, a
+   ostale ugasiti.
+*/
 void ispis(int id, void*tptr) 
 {
    if (Serial.available()) 
