@@ -13,9 +13,8 @@ void ucitaj(int id, void *tptr)
       {
           prvi = atoi(Serial.readString().c_str());
           prviUcitan = true;
-      }
-        
-      if(!drugiUcitan)
+      } 
+      else if(!drugiUcitan)
       {
           drugi = atoi(Serial.readString().c_str());
           drugiUcitan = true;
