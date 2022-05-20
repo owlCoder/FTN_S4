@@ -1,3 +1,24 @@
+/*
+    Napisati program koji:
+    
+    - Postavlja lampice na pinovima 26-33 kao izlazne pinove i inicijalizuje
+	  komunikaciju sa serijskim monitorom na 9600bps
+
+    - Sadrži promenljivu br, inicijalno postavljenu na 0 u kojoj će biti sumirane
+      vrednosti sa analognog ulaza A0
+	  
+	- Sadrži task koji prilikom pritiska na dugme na pinu 4, ukoliko je dugme držano
+	  duže od 2 sekunde, povećava vrednost brojača br za vrednost pročitanu sa
+	  analognog ulaza A0 i ispisuje brojač na serijski monitor
+	  
+	- Sadrži interapt koji se startuje pri paljenju prekidača na pinu 2, čita vrednost
+	  analognog ulaza, skalira je na vrednost od 0 do 255 i dobijeni broj prikazuje na
+      lampicama 26-33 u binarnom obliku
+	  
+	- Sadrži task koji učitava broj sa serijskog monitora, ukoliko postoji, i ukoliko je taj
+	  broj manji od brojača br, onemogućuje task za kontrolu dugmeta iz stavke 3.
+	  Ispisati odgovarajuću poruku na serijski izlaz
+ */
 int br = 0;
 int staroStanje = 0;
 int startTime = millis();
