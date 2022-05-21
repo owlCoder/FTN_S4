@@ -31,11 +31,11 @@ void startArduinoSimulator(int showGUI, int hideConsole, int startTasks, int sta
     GUI *basicIOShield;
 
     for (int i = 0; i<DIGITAL_NUM_PINS; i++) {
-        digitalPins.mode[i] = INPUT1;
+        digitalPins.mode[i] = INPUT;
         digitalPins.state[i] = LOW;
     }
     for (int i = 0; i<ANALOG_NUM_PINS; i++) {
-        analogPins.mode[i] = INPUT1;
+        analogPins.mode[i] = INPUT;
         analogPins.state[i] = LOW;
     }
 

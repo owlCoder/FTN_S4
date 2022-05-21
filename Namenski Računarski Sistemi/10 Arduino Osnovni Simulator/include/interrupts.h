@@ -29,7 +29,7 @@ int digitalInterruptToPin(int);
 
 void attachInterrupt(int, interruptFunc, int);
 
-void deattachInterrupt(int);
+void detachInterrupt(int);
 
 interruptFunc getIntVector(int);
 

@@ -2,11 +2,11 @@
 #define BASE_H
 #include "windows.h"
 
-const int INPUT1 = 1;
-int const OUTPUT = 0;
-int const HIGH = 1;
-int const LOW = 0;
-int const A0 = 0;
+#define INPUT 1
+#define OUTPUT 0
+#define HIGH 1
+#define LOW 0
+#define A0 0
 
 int const DIGITAL_NUM_PINS = 70;
 int const ANALOG_NUM_PINS = 1;

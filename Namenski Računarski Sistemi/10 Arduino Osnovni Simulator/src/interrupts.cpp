@@ -25,7 +25,7 @@ void attachInterrupt(int i, interruptFunc fun, int mode){
     interruptHeaders.interruptH[i].interruptFunction = fun;
 };
 
-void deattachInterrupt(int i){
+void detachInterrupt(int i){
    interruptHeaders.interruptH[i].interruptFunction = 0;
 };
 

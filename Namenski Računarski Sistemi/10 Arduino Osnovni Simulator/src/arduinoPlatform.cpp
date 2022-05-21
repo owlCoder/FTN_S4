@@ -44,7 +44,7 @@ void analogWrite(int pin, int value){
          if (value>=0&&value<=127)
             digitalPins.state[pin] = LOW;
          else if(value>=128&&value<=255)
-            digitalPins.state[pin] = LOW;
+            digitalPins.state[pin] = HIGH;
    }
 }
 
