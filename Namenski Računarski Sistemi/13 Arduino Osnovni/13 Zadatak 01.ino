@@ -9,53 +9,60 @@
 	dugme BTN1, koji podrazumeva i funkcije attachInterrupt1() i
 	deattachInterrupt1() slične postojećim funkcijama.
 */
-int oldState1, oldState2, blink1_id;
-int PIN_SW1 = 2;
-int PIN_SW2 = 7;
-int PIN_LED1a = 26;
+typedef void var_func();
+var_func *rastucaIvica = NULL, *opadajucaIvica = NULL;
+int staroStanje = 0, novoStanje = 0;
 
-void blink_task1(int id, void * tptr)
+void attachInterrupt_btn(var_func *fun, int mod)
 {
-  digitalWrite(PIN_LED1a, !digitalRead(PIN_LED1a)); 
+    if(mod == RISING)
+        rastucaIvica = fun;
+    else
+        opadajucaIvica = fun;
 }
 
-void prekidac1(int id, void * tptr)
+void dettachInterrupt_btn(int mode)
 {
-    int newState = digitalRead(PIN_SW1);
-	if (oldState1 == 1  && newState == 0) {
-        setTaskState(blink1_id, TASK_DISABLE);
-	} else if (oldState1 == 0 && newState ==1) {
-        setTaskState(blink1_id, TASK_ENABLE);
-	}
-	oldState1 = newState;
+    if(mode == RISING)
+        rastucaIvica = NULL;
+    else
+        opadajucaIvica = NULL;
 }
 
-void prekidac2(int id, void * tptr)
+void interruptOn()  { digitalWrite(27, HIGH); }
+void interruptOff() { digitalWrite(27, LOW); }
+
+void dugme(int id, void *tptr)
 {
-    int newState = digitalRead(PIN_SW2);
-	if (oldState2 == 1  && newState == 0) {
-        setTaskPeriod(blink1_id, 100);
-	} else if (oldState2 == 0 && newState ==1) {
-        setTaskPeriod(blink1_id, 1000);
-	}
-	oldState2 = newState;
+    novoStanje = digitalRead(4);
+
+    if(staroStanje == 0 && novoStanje == 1)
+    {
+        if(rastucaIvica != NULL)
+            rastucaIvica();
+    }
+    else if(staroStanje == 1 && novoStanje == 0)
+    {
+        if(opadajucaIvica != NULL)
+            opadajucaIvica();
+    }
+
+    staroStanje = novoStanje;
 }
 
 void setup()
 {
-    pinMode(PIN_LED1a, OUTPUT);
-    oldState1 = digitalRead(PIN_SW1);
-    oldState2 = digitalRead(PIN_SW2);
-    if (oldState1==1)
-        blink1_id = createTask(blink_task1, 100, TASK_ENABLE, NULL);
-    else
-        blink1_id = createTask(blink_task1, 100, TASK_DISABLE, NULL);
-    createTask(prekidac1, 50, TASK_ENABLE, NULL);
-    createTask(prekidac2, 50, TASK_ENABLE, NULL);
+    pinMode(27, OUTPUT);
+
+    attachInterrupt_btn(interruptOn, RISING);
+    attachInterrupt_btn(interruptOff, FALLING);
+
+    createTask(dugme, 20, TASK_ENABLE, NULL);
 }
 
 void loop()
 {
 
 }
+
 
