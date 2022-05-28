@@ -1,0 +1,36 @@
+﻿<Window x:Class="OOT_PP_PR83_PR55_2020_BIBLIOTEKA.Biblioteke.SpisakKnjige"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOT_PP_PR83_PR55_2020_BIBLIOTEKA.Biblioteke"
+        mc:Ignorable="d"
+        Title="Spisak Knjiga" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+    <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20">
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label  Name="naslov" HorizontalAlignment="Center" Content="/" FontSize="20" FontWeight="Bold"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="10">
+                <Label Content="Unesite deo ili ceo naziv knjige ili autora: " FontSize="16" FontWeight="Bold" />
+                <TextBox Name="pretraga" FontSize="16" TextChanged="pretraga_TextChanged" />
+            </StackPanel>
+
+            <DataGrid Grid.Row="2" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="knjigePoBiblioteci" ItemsSource="{Binding Knjiga}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Naziv" Binding="{Binding Path=Naziv}"/>
+                    <DataGridTextColumn Header="Autor" Binding="{Binding Path=Autora}"/>
+                    <DataGridTextColumn Header="Godina Izdanja" Binding="{Binding Path=GodinaIzdanja}" Width="100*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</Window>
