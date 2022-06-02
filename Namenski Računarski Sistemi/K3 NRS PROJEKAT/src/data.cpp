@@ -1,10 +1,28 @@
 #include "data.h"
+#pragma pack(4)
+
+typedef struct slog
+{
+    char datum[15], vreme[15];
+    int broj;
+} Slog;
 
 list<Slog *> slogovi;
 int genOneId = -1;
-int sameNum  = -1;
+int sameNum  = -1000000000;
 int cnt      =  1;
 int err      =  0;
+#define M_PI2 3.141592653589793238
+dataGenStruct dg;
+double x = -M_PI2 / 2;
+
+double sine(double n, float greska, int paramLow, int paramHigh)
+{
+    double ret = sin(x) * (paramHigh - paramLow) / 2 + (paramHigh + paramLow) / 2;
+    x += 0.2;
+
+    return ceil(ret);
+}
 
 void getDateTime(char *datum, char *vreme)
 {
@@ -21,25 +39,59 @@ void getDateTime(char *datum, char *vreme)
     strcpy(vreme, v);
 
 }
-void startStopDataGeneration(bool gen, generation_type gt, int start, int end, float error, long taskDiffer_t)
-{
-    srand(time(NULL));
-    dataGenStruct dg;
-    dg.gt = gt;
-    dg.start = start, dg.end = end;
-    dg.error = error;
 
-    if(gen == START_GENERATION)
+
+void generateSameNumber(int startInt, int endInt, float error)
+{
+    if(sameNum == -1000000000)
     {
-        if(genOneId == -1)
-            genOneId = createTask(generateOne, taskDiffer_t, TASK_ENABLE, &dg);
-        else
-            setTaskState(genOneId, TASK_ENABLE);
+        srand(time(NULL));
+        Slog *novi = new Slog;
+        getDateTime(novi -> datum, novi -> vreme);
+        novi -> broj = random(startInt, endInt);
+        sameNum = novi -> broj;
+        slogovi.push_back(novi);
     }
     else
     {
-        setTaskState(genOneId, TASK_DISABLE);
+        Slog *novi = new Slog;
+
+        getDateTime(novi -> datum, novi -> vreme);
+        int x = random(0, 100);
+        if (x < 100 * error)
+            novi -> broj = random(startInt, endInt);
+        else
+            novi -> broj = sameNum;
+
+        slogovi.push_back(novi);
     }
+}
+
+void generateRandomNumber(int startInt, int endInt, float error)
+{
+    Slog *novi = new Slog;
+
+    getDateTime(novi -> datum, novi -> vreme);
+    novi -> broj = random(startInt, endInt);
+
+    slogovi.push_back(novi);
+}
+
+void generateSinNumber(int startInt, int endInt, float error)
+{
+    Slog *novi = new Slog;
+
+    getDateTime(novi -> datum, novi -> vreme);
+    novi -> broj = sine(cnt, error, startInt, endInt);
+    cnt++;
+
+    if(novi -> broj > endInt)
+        novi -> broj -= endInt;
+
+    if(random(0, 100) < 100 * error)
+        novi -> broj = random(startInt, endInt);
+
+    slogovi.push_back(novi);
 }
 
 void generateOne(int id, void *tptr)
@@ -47,99 +99,11 @@ void generateOne(int id, void *tptr)
     dataGenStruct *dg = (dataGenStruct *) tptr;
 
     if(dg -> gt == SAME)
-        generateSameNumber(dg -> start, dg -> end, dg -> error);
+        generateSameNumber(dg -> startInt, dg -> endInt, dg -> error);
     else if(dg -> gt == RANDOM)
-        generateRandomNumber(dg -> start, dg -> end, dg -> error);
+        generateRandomNumber(dg -> startInt, dg -> endInt, dg -> error);
     else if(dg -> gt == SIN)
-        generateSinNumber(dg -> start, dg -> end, dg -> error);
-}
-
-void generateSameNumber(int start, int end, float error)
-{
-    if(sameNum == -1)
-    {
-        srand(time(NULL));
-
-        err = (error > 0.5) ? rand() % (end / 5) : rand() % 2;
-        Slog *novi = new Slog;
-
-        getDateTime(novi -> datum, novi -> vreme);
-        novi -> broj = rand() % end;
-
-        if(error >= 0.5)
-        {
-            sameNum = novi -> broj;
-            novi -> broj += err;
-        }
-        else if(error < 0.5 && (rand() % 2))
-        {
-            sameNum = novi -> broj;
-            novi -> broj -= err;
-        }
-        else
-        {
-            sameNum = novi -> broj;
-        }
-
-        if(novi -> broj < start || novi -> broj > end)
-            novi -> broj = start + end / 2;
-
-        slogovi.push_back(novi);
-    }
-    else
-    {
-        Slog *novi = new Slog;
-
-        getDateTime(novi -> datum, novi -> vreme);
-        novi -> broj = sameNum;
-
-        slogovi.push_back(novi);
-    }
-}
-
-void generateRandomNumber(int start, int end, float error)
-{
-    Slog *novi = new Slog;
-
-    getDateTime(novi -> datum, novi -> vreme);
-    novi -> broj = rand() % end;
-
-    err = (error > 0.5) ? rand() % (end / 5) : rand() % 2;
-
-    if(error >= 0.5)
-        novi -> broj += err;
-    else if(error < 0.5 && (rand() % 2))
-        novi -> broj -= err;
-
-    if(novi -> broj < start || novi -> broj > end)
-        novi -> broj = start + end / 2;
-
-    slogovi.push_back(novi);
-}
-
-void generateSinNumber(int start, int end, float error)
-{
-    Slog *novi = new Slog;
-
-    getDateTime(novi -> datum, novi -> vreme);
-    novi -> broj = sine(cnt);
-    cnt++;
-
-    if(cnt > end || cnt < start)
-        cnt = start;
-
-    err = (error > 0.5) ? rand() % (end / 5) : rand() % 2;
-
-    if(error >= 0.5)
-        novi -> broj += err;
-    else if(error < 0.5 && (rand() % 2))
-        novi -> broj -= err;
-
-    if( (novi -> broj < start && novi -> broj < -start)
-            || (novi -> broj > end && novi -> broj < -end))
-        novi -> broj = -sine(start + end / 2 - cnt);
-
-    slogovi.push_back(novi);
+        generateSinNumber(dg -> startInt, dg -> endInt, dg -> error);
 }
 
 bool available()
@@ -184,23 +148,30 @@ char *readAll()
 {
     if(available())
     {
-        string tmp = "";
+        unsigned velicina = slogovi.size();
+        int i = 0;
+        char *buffer = new char[sizeof(int) + velicina * sizeof(Slog)];
+
+        *((int *) buffer) = (int) velicina;
+        Slog *s = (Slog *) (buffer + sizeof(int));
+
         while(available())
         {
-            char *r = read();
-            tmp += string(r);
-            tmp += " ";
-            delete[] r;
+            auto it = slogovi.begin();
+
+            strcpy(s[i].vreme, (*it) -> vreme);
+            strcpy(s[i].datum, (*it) -> datum);
+            s[i].broj = (*it) -> broj;
+
+            slogovi.remove(*it);
+            delete *it;
+            i++;
         }
 
-        char *str = new char[tmp.length()];
-        strcpy(str, tmp.c_str());
-
-        return str;
+        return buffer;
     }
     else
         return NULL;
-
 }
 
 void clear()
@@ -215,28 +186,26 @@ void clear()
     }
 }
 
-/// Funkcije sinusoide
-double fmod(double a, double b)
-{
-    double frac = a / b;
-    int floor = frac > 0 ? (int)frac : (int)(frac - 0.9999999999999999);
-    return (a - b * floor);
+int slogSize(){
+   return sizeof(Slog);
 }
 
-double sine(double n)
+void startStopDataGeneration(bool gen, generation_type gt, int startInt, int endInt, float error, long taskDiffer_t)
 {
-    double result = n;
-    n = fmod(n, 2 * M_PI);
+    srand(time(NULL));
+    dg.gt = gt;
+    dg.startInt = startInt, dg.endInt = endInt;
+    dg.error = error;
 
-    if (n < 0)
-        n = 2 * M_PI - n;
-
-    char sign = 1;
-    if (n > M_PI)
+    if(gen == START_GENERATION)
     {
-        n -= M_PI;
-        sign = -1;
+        if(genOneId == -1)
+            genOneId = createTask(generateOne, taskDiffer_t, TASK_ENABLE, &dg);
+        else
+            setTaskState(genOneId, TASK_ENABLE);
     }
-
-    return sign * result;
+    else
+    {
+        setTaskState(genOneId, TASK_DISABLE);
+    }
 }

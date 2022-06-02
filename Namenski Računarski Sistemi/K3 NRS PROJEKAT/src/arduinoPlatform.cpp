@@ -78,7 +78,7 @@ int map(int value, int int1begin, int int1end, int int2begin, int int2end){
 }
 
 void executeSoftReset(unsigned options){
-   Serial.writeln((char *)"Sistem je resetovan!");
+   Serial.writeln("Sistem je resetovan!");
 };
 
 DWORD WINAPI mainLoop(LPVOID lpParam)

@@ -1,7 +1,21 @@
 #include "GUI.h"
 #include "arduinoPlatform.h"
 #include "serial.h"
-#include <math.h>
+#include "math.h"
+//#include <cstdlib>
+
+char* itoa3(int n, char *c, int b){
+   char s[33];
+   s[32] = 0;
+   int i = 31;
+   do {
+     s[i] = n%b+'0';
+     i--;
+     n = n/b;
+   } while (n!=0);
+   memcpy(c, &s[i+1], 32-i);
+   return c;
+}
 
 GUI *me;
 extern serial Serial;
@@ -54,7 +68,7 @@ void GUI::CreateGUI(HWND hwnd){
         for(int i=0; i<8; i++) {
             hwndLED[i] = CreateWindow(TEXT("static"), NULL, WS_VISIBLE | WS_CHILD | SS_BITMAP | SS_NOTIFY,
                                          350-25*i, 200, 25, 25, hwnd, (HMENU) i+120, NULL, NULL);
-            CreateWindow(TEXT("static"), TEXT(itoa(33-i, buf, 10)), WS_VISIBLE | WS_CHILD,
+            CreateWindow(TEXT("static"), TEXT(itoa3(33-i, buf, 10)), WS_VISIBLE | WS_CHILD,
                                          180+25*i, 230, 25, 25, hwnd, (HMENU) 202, NULL, NULL);
             SendMessageW(hwndLED[i], STM_SETIMAGE, IMAGE_BITMAP, (LPARAM) ledOffImg);
         }

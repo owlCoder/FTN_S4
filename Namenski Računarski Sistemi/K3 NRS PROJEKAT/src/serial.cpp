@@ -1,6 +1,18 @@
 #include "serial.h"
 #include "windowsx.h"
 
+void itoa2(int n, char *c, int b){
+   char s[33];
+   s[32] = 0;
+   int i = 31;
+   do {
+     s[i] = n%b+'0';
+     i--;
+     n = n/b;
+   } while (n!=0);
+   memcpy(c, &s[i+1], 32-i);
+}
+
 serial Serial;
 
 serial::serial()
@@ -60,7 +72,7 @@ void serial::writeln(char c){
      Edit_SetText(hwndOutput, buff);
 }
 
-void serial::write(char *c){
+void serial::write(const char *c){
      char buff[10000];
      Edit_GetText(hwndOutput, buff, 10000);
      int len = strlen(buff);
@@ -71,7 +83,7 @@ void serial::write(char *c){
      Edit_SetText(hwndOutput, buff);
 }
 
-void serial::writeln(char *c){
+void serial::writeln(const char *c){
      char buff[10000];
      Edit_GetText(hwndOutput, buff, 10000);
      int len = strlen(buff);
@@ -93,23 +105,23 @@ void serial::print(char c){
 
 void serial::print(short s){
    char buffer[10];
-   itoa(s, buffer, 10);
+   itoa2(s, buffer, 10);
    write(buffer);
 }
 
 void serial::print(int i){
    char buffer[10];
-   itoa(i, buffer, 10);
+   itoa2(i, buffer, 10);
    write(buffer);
 }
 
 void serial::print(long l){
    char buffer[10];
-   itoa(l, buffer, 10);
+   itoa2(l, buffer, 10);
    write(buffer);
 }
 
-void serial::print(char *c){
+void serial::print(const char *c){
    write(c);
 }
 
@@ -119,23 +131,23 @@ void serial::println(char c){
 
 void serial::println(short s){
    char buffer[10];
-   itoa(s, buffer, 10);
+   itoa2(s, buffer, 10);
    writeln(buffer);
 }
 
 void serial::println(int i){
    char buffer[10];
-   itoa(i, buffer, 10);
+   itoa2(i, buffer, 10);
    writeln(buffer);
 }
 
 void serial::println(long l){
    char buffer[10];
-   itoa(l, buffer, 10);
+   itoa2(l, buffer, 10);
    writeln(buffer);
 }
 
-void serial::println(char *c){
+void serial::println(const char *c){
    writeln(c);
 }
 
@@ -252,9 +264,6 @@ int serial::CreateSerialWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
     WNDCLASSEX wc;
     MSG Msg;
-
-    Msg.wParam = NULL;
-
    //Step 1: Registering the Window Class
     wc.cbSize        = sizeof(WNDCLASSEX);
     wc.style         = 0;

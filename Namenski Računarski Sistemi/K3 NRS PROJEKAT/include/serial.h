@@ -1,6 +1,7 @@
 #ifndef SERIALGUI_H
 #define SERIALGUI_H
 #include "Windows.h"
+#include "stdlib.h"
 
 class serial
 {
@@ -15,19 +16,19 @@ class serial
         int isVisible();
         void begin(int);
         void write(char c);
-        void write(char *c);
+        void write(const char *c);
         void writeln(char c);
-        void writeln(char *c);
+        void writeln(const char *c);
         void print(char c);
         void print(short s);
         void print(int i);
         void print(long l);
-        void print(char *c);
+        void print(const char *c);
         void println(char c);
         void println(short s);
         void println(int i);
         void println(long l);
-        void println(char *c);
+        void println(const char *c);
         int available();
         char read();
         char* readString();
