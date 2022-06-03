@@ -63,6 +63,7 @@ namespace Biblioteka.Knjige
                 dodaj.IdKorisnika = odabranaKnjiga.IdKorisnika;
                 dodaj.NijeDodata = odabranaBiblioteka.Naziv;
                 odabranaKnjiga.NijeDodata = odabranaBiblioteka.Naziv;
+                odabranaKnjiga.IdBiblioteke = dodaj.IdBiblioteke;
 
                 odabranaBiblioteka.Knjige.Add(dodaj);
                 // NE UKLANJA SE NA KONTU TOGA DA SE U LISTI SVIH KNJIGA PRIKAZUJE 

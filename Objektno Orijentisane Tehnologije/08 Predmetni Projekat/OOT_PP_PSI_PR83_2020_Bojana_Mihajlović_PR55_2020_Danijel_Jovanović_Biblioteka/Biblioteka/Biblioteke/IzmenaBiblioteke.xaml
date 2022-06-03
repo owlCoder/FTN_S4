@@ -26,7 +26,7 @@
                 <TextBox Name="pretraga" FontSize="16" TextChanged="pretraga_TextChanged" />
             </StackPanel>
 
-            <DataGrid Grid.Row="2" Grid.Column="0" FontSize="14" FontWeight="Medium" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSveBiblioteke" ItemsSource="{Binding Biblioteka_}" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="dataGridSveBiblioteke_MouseDoubleClick">
+            <DataGrid Grid.Row="2" Grid.Column="0" FontSize="14" FontWeight="Medium" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSveBiblioteke" ItemsSource="{Binding Biblioteka}" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="dataGridSveBiblioteke_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naziv" Width="100*" Binding="{Binding Path=Naziv}"/>
                     <DataGridTextColumn Header="Adresa" Width="100*" Binding="{Binding Path=Adresa}"/>

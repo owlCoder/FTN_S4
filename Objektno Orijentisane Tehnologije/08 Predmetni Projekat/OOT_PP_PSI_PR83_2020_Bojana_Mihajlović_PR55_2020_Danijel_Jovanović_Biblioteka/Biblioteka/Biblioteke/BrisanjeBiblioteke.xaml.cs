@@ -46,6 +46,42 @@ namespace Biblioteka.Biblioteke
 
             if (daNe == MessageBoxResult.Yes)
             {
+                // KNJIGE KOJE SU PRIPADALE BIBLIOTECI VIŠE NEĆE PRIPADATI
+                foreach(Knjige.Knjiga k in App.SveKnjige)
+                {
+                    if (k.IdBiblioteke == biblioteka.IdBiblioteke)
+                    {
+                        k.IdBiblioteke = -1;
+                        k.NijeDodata = "NIJE DODATA";
+                        k.IdKorisnika = -1;
+                    }
+                }
+
+                foreach (Knjige.Knjiga k in biblioteka.Knjige)
+                {
+                    k.IdBiblioteke = -1;
+                    k.NijeDodata = "NIJE DODATA";
+                    k.IdKorisnika = -1;
+                }
+
+                // OTCLANI KORISNIKE
+                foreach (Korisnici.Korisnik k in App.SviKorisnici)
+                {
+                    if (k.IdBiblioteke == biblioteka.IdBiblioteke)
+                    {
+                        k.IdBiblioteke = -1;
+                        k.DatumUclanjenja = "/";
+                        k.Uclanjen = "/";
+                    }
+                }
+
+                foreach (Korisnici.Korisnik k in biblioteka.Korisnici)
+                {
+                    k.IdBiblioteke = -1;
+                    k.DatumUclanjenja = "/";
+                    k.Uclanjen = "/";
+                }
+
                 biblioteka.Knjige.Clear();
                 biblioteka.Korisnici.Clear();
                 App.Biblioteke.Remove(biblioteka);

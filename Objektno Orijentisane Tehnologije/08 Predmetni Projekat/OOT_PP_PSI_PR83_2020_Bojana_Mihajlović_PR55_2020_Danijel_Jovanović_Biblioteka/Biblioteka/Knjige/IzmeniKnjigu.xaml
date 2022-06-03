@@ -27,7 +27,7 @@
 
             <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="ODABERITE DUPLIM KLIKOM KNJIGU ZA IZMENU" FontSize="18" FontWeight="Bold"/>
 
-            <DataGrid Grid.Row="2" Grid.Column="0" FontWeight="Medium" FontSize="16" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSveKnjige" ItemsSource="{Binding Knjiga_}" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="dataGridSveKnjige_MouseDoubleClick">
+            <DataGrid Grid.Row="2" Grid.Column="0" FontWeight="Medium" FontSize="16" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSveKnjige" ItemsSource="{Binding Knjiga}" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="dataGridSveKnjige_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naziv" Binding="{Binding Path=Naziv}"/>
                     <DataGridTextColumn Header="Autor" Binding="{Binding Path=Autor}"/>

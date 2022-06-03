@@ -24,7 +24,7 @@
             <!-- Leva strana - izbor korisnika -->
             <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="SPISAK SVIH KORISNIKA" FontSize="20" FontWeight="Bold"/>
 
-            <DataGrid Grid.Row="1" Grid.Column="0" FontWeight="Medium" FontSize="14" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSviKorisnici" ItemsSource="{Binding Korisnik_}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5">
+            <DataGrid Grid.Row="1" Grid.Column="0" FontWeight="Medium" FontSize="14" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="dataGridSviKorisnici" ItemsSource="{Binding Korisnik}" IsReadOnly="True" AutoGenerateColumns="False" Margin="5">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ime" Width="100*" Binding="{Binding Path=Ime}"/>
                     <DataGridTextColumn Header="Prezime" Width="100*" Binding="{Binding Path=Prezime}"/>
