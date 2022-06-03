@@ -21,6 +21,7 @@ namespace Biblioteka.Knjige
         {
             InitializeComponent();
         }
+		
         private void dodajKnjiguBtn_Click(object sender, RoutedEventArgs e)
         {
             if (nazivKnjige.Text.Equals("") || autorKnjige.Text.Equals("") || godinaIzdanjaKnjige.Text.Equals(""))

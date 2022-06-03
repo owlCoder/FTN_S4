@@ -10,7 +10,6 @@
 
     <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 70">
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -48,7 +47,7 @@
             </DataGrid>
 
             <Button Grid.Row="2" Grid.Column="1" Name="pozajmiKnjiguBtn" Click="pozajmiKnjiguBtn_Click" Margin="50 5 50 5" IsEnabled="False" Content="POZAJMI KNJIGU" FontSize="16" FontWeight="Bold"></Button>
-
         </Grid>
     </Border>
+	
 </Page>

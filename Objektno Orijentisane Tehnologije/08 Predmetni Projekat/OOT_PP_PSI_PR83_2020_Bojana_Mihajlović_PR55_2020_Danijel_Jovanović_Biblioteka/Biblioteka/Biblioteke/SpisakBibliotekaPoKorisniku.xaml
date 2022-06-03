@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SpisakBibliotekaPoKorisniku">
-    <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 90">
+    
+	<Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 90">
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -42,4 +43,5 @@
             </DataGrid>
         </Grid>
     </Border>
+	
 </Page>

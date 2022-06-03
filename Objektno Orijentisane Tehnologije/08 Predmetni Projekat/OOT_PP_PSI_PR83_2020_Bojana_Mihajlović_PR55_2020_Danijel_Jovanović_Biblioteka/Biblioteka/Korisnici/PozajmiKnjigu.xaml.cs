@@ -26,9 +26,16 @@ namespace Biblioteka.Korisnici
             dataGridSviKorisnici.ItemsSource = App.SviKorisnici;
             #endregion
         }
+		
         private void izborKorisnikaBtn_Click(object sender, RoutedEventArgs e)
         {
             App.SelektovaniKorisnik = dataGridSviKorisnici.SelectedItem as Korisnik; 
+
+            if (App.SelektovaniKorisnik == null)
+            {
+                MessageBox.Show("Niste izabrali korisnika!", "Upozorenje!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             // Tražimo u kojoj biblioteci je izabrani korisnik i prikazujemo knjige koje su u njoj dostupne
             int brojacProlaza = 0;
@@ -48,7 +55,6 @@ namespace Biblioteka.Korisnici
                 }
             }
 
-            // OVO MI MALO NIJE JASNO
             if (brojacProlaza == App.Biblioteke.Count)
             {
                 MessageBox.Show("Odabrana biblioteka nema dostupnih knjiga!", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -100,10 +106,11 @@ namespace Biblioteka.Korisnici
             MessageBox.Show("Korisnik je pozajmio knjigu.", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Cleanup
-            dataGridSviKorisnici.SelectedItem = -1;
-            dataGridDostupneKnjige.SelectedItem = -1;
+            dataGridSviKorisnici.SelectedItem = null;
+            dataGridDostupneKnjige.SelectedItem = null;
             App.SelektovaniKorisnik = null;
             App.SelektovanaKnjiga = null;
+            dataGridDostupneKnjige.ItemsSource = null;
 
             pozajmiKnjiguBtn.IsEnabled = false;
         }

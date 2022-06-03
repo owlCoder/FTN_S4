@@ -27,4 +27,5 @@
             <Button Content="DODAVANJE BIBLIOTEKE" Name="dodajBtn" Click="dodajBtn_Click" FontWeight="Bold" FontSize="20" Margin="0 10 0 0"/>
         </StackPanel>
     </Border>
+	
 </Page>

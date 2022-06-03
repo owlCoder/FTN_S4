@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,7 @@ namespace Biblioteka.Biblioteke
             dataGridSveBiblioteke.ItemsSource = App.Biblioteke;
             #endregion
         }
+		
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
@@ -61,6 +63,7 @@ namespace Biblioteka.Biblioteke
         {
             List<Biblioteka> pretrazeno = new List<Biblioteka>();
             string unos = (sender as TextBox).Text;
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Biblioteka k in App.Biblioteke)
             {

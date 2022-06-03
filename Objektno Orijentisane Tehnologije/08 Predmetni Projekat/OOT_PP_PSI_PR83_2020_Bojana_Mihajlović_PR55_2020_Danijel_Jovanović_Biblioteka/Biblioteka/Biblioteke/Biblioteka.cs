@@ -56,6 +56,7 @@ namespace Biblioteka.Biblioteke
                 }
             }
         }
+
         public string Adresa
         {
             get
@@ -72,6 +73,7 @@ namespace Biblioteka.Biblioteke
                 }
             }
         }
+
         public int GodinaOsnivanja
         {
             get
@@ -88,6 +90,7 @@ namespace Biblioteka.Biblioteke
                 }
             }
         }
+
         public string LogoBiblioteke
         {
             get
@@ -104,6 +107,7 @@ namespace Biblioteka.Biblioteke
                 }
             }
         }
+		
         public ObservableCollection<Korisnici.Korisnik> Korisnici { get => korisnici; set => korisnici = value; }
         public ObservableCollection<Knjige.Knjiga> Knjige { get => knjige; set => knjige = value; }
         public int IdBiblioteke { get => idBiblioteke; set => idBiblioteke = value; }

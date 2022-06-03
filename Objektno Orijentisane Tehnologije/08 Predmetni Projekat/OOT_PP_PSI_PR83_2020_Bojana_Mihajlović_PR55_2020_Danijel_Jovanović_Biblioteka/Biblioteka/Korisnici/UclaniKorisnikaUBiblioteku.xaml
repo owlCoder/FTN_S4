@@ -10,7 +10,6 @@
 
     <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 70">
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -49,7 +48,7 @@
             </DataGrid>
 
             <Button Grid.Row="2" Grid.Column="1" Name="uclaniKorisnikaBtn" Click="uclaniKorisnikaBtn_Click" Margin="20 2 20 5" IsEnabled="False" Content="UČLANI KORISNIKA" FontWeight="Bold" FontSize="16"></Button>
-
         </Grid>
     </Border>
+
 </Page>

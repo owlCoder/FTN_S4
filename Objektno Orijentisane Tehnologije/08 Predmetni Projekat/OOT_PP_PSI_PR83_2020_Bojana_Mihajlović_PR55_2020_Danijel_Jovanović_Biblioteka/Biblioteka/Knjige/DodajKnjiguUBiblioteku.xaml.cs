@@ -27,12 +27,8 @@ namespace Biblioteka.Knjige
             dataGridBiblioteke.ItemsSource = App.Biblioteke;
             #endregion
         }
+		
         private void izborKnjigeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            dodajUBibliotekuBtn.IsEnabled = true;
-        }
-
-        private void dodajUBibliotekuBtn_Click(object sender, RoutedEventArgs e)
         {
             var odabranaKnjiga = dataGridSveKnjige.SelectedItem as Knjiga;
 
@@ -41,37 +37,45 @@ namespace Biblioteka.Knjige
                 MessageBox.Show("Niste odabrali knjigu!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            dodajUBibliotekuBtn.IsEnabled = true;
+        }
+
+        private void dodajUBibliotekuBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Ako smo došli do ovog dela koda, znamo da je sigurno izabrana neka knjiga
+            var odabranaKnjiga = dataGridSveKnjige.SelectedItem as Knjiga;
+
+            var odabranaBiblioteka = dataGridBiblioteke.SelectedItem as Biblioteke.Biblioteka;
+
+            if (odabranaBiblioteka == null)
+            {
+                MessageBox.Show("Niste odabrali biblioteku!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             else
             {
-                var odabranaBiblioteka = dataGridBiblioteke.SelectedItem as Biblioteke.Biblioteka;
+                // Odabrane su i knjiga i biblioteka
+                Knjiga dodaj = new Knjiga(odabranaKnjiga.Naziv, odabranaKnjiga.Autor, odabranaKnjiga.GodinaIzdanja);
 
-                if (odabranaBiblioteka == null)
-                {
-                    MessageBox.Show("Niste odabrali biblioteku!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                else
-                {
-                    // odabrana je i knjiga i biblioteka
-                    Knjiga dodaj = new Knjiga(odabranaKnjiga.Naziv, odabranaKnjiga.Autor, odabranaKnjiga.GodinaIzdanja);
+                dodaj.IdBiblioteke = odabranaBiblioteka.IdBiblioteke;
+                dodaj.IdKnjige = odabranaKnjiga.IdKnjige;
+                dodaj.IdKorisnika = odabranaKnjiga.IdKorisnika;
+                dodaj.NijeDodata = odabranaBiblioteka.Naziv;
+                odabranaKnjiga.NijeDodata = odabranaBiblioteka.Naziv;
 
-                    dodaj.IdBiblioteke = odabranaBiblioteka.IdBiblioteke;
-                    dodaj.IdKnjige = odabranaKnjiga.IdKnjige;
-                    dodaj.IdKorisnika = odabranaKnjiga.IdKorisnika;
-                    dodaj.NijeDodata = odabranaBiblioteka.Naziv;
-                    odabranaKnjiga.NijeDodata = odabranaBiblioteka.Naziv;
+                odabranaBiblioteka.Knjige.Add(dodaj);
+                // NE UKLANJA SE NA KONTU TOGA DA SE U LISTI SVIH KNJIGA PRIKAZUJE 
+                // U KOJOJ JE BIBLIOTECI DODATA
+                // App.SveKnjige.Remove(odabranaKnjiga);
 
-                    odabranaBiblioteka.Knjige.Add(dodaj);
-                    // NE UKLANJA SE NA KONTU TOGA DA SE U LISTI SVIH KNJIGA PRIKAZUJE 
-                    // U KOJOJ JE BIBLIOTECI DODATA
-                    // App.SveKnjige.Remove(odabranaKnjiga);
+                MessageBox.Show("Odabrana knjiga dodata u biblioteku!", "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    MessageBox.Show("Odabrana knjiga dodata u biblioteku!", "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Cleanup
+                dataGridSveKnjige.SelectedItem = null;
+                dataGridBiblioteke.SelectedItem = null;
 
-                    dataGridBiblioteke.SelectedItem = -1;
-                    dataGridSveKnjige.SelectedItem = -1;
-                    dodajUBibliotekuBtn.IsEnabled = false;
-                }
+                dodajUBibliotekuBtn.IsEnabled = false;
             }
         }
     }

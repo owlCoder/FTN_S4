@@ -62,6 +62,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+
         public string Prezime
         {
             get
@@ -78,6 +79,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+
         public string Jmbg
         {
             get
@@ -94,6 +96,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+
         public string ProfilnaSlika
         {
             get
@@ -110,6 +113,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+
         public string DatumUclanjenja
         {
             get
@@ -126,6 +130,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+
         public string Uclanjen
         {
             get
@@ -142,6 +147,7 @@ namespace Biblioteka.Korisnici
                 }
             }
         }
+		
         public int IdKorisnika { get => idKorisnika; set => idKorisnika = value; }
         public int IdBiblioteke { get => idBiblioteke; set => idBiblioteke = value; }
         #endregion

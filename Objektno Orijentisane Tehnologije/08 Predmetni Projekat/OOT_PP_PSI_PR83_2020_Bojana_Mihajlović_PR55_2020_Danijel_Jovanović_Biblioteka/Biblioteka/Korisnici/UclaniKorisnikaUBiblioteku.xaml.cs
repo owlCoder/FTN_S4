@@ -27,6 +27,7 @@ namespace Biblioteka.Korisnici
             dataGridSveBiblioteke.ItemsSource = App.Biblioteke;
             #endregion
         }
+		
         private void izborKorisnikaBtn_Click(object sender, RoutedEventArgs e)
         {
             App.SelektovaniKorisnik = dataGridSviKorisnici.SelectedItem as Korisnik;
@@ -70,8 +71,8 @@ namespace Biblioteka.Korisnici
             MessageBox.Show("Korisnik je učlanjen u biblioteku.", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Cleanup
-            dataGridSveBiblioteke.SelectedItem = -1;
-            dataGridSviKorisnici.SelectedItem = -1;
+            dataGridSveBiblioteke.SelectedItem = null;
+            dataGridSviKorisnici.SelectedItem = null;
             App.SelektovaniKorisnik = null;
             App.SelektovanaBiblioteka = null;
 

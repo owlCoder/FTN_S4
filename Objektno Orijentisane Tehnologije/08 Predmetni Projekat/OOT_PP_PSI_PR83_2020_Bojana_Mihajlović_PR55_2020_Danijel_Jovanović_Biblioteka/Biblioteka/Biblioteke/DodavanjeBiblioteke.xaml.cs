@@ -18,6 +18,7 @@ namespace Biblioteka.Biblioteke
     public partial class DodavanjeBiblioteke : Page
     {
         private string trenutnaPutanja = string.Empty;
+		
         public DodavanjeBiblioteke()
         {
             InitializeComponent();

@@ -17,6 +17,7 @@ namespace Biblioteka.Korisnici
     public partial class KorisnikInfo : Window
     {
         private static string trenutnaPutanja = string.Empty;
+		
         public KorisnikInfo()
         {
             InitializeComponent();

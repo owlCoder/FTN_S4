@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,10 +32,12 @@ namespace Biblioteka.Biblioteke
             }
             #endregion
         }
+		
         private void pretraga_TextChanged(object sender, TextChangedEventArgs e)
         {
             List<Knjige.Knjiga> pretrazeno = new List<Knjige.Knjiga>();
             string unos = (sender as TextBox).Text;
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Knjige.Knjiga k in App.ReferencaNaKnjigePoBiblioteci)
             {

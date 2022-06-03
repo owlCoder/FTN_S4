@@ -29,6 +29,7 @@ namespace Biblioteka.Knjige
             }
             #endregion
         }
+		
         private void izmeniKnjiguBtn_Click(object sender, RoutedEventArgs e)
         {
             if (nazivKnjige.Text.Equals("") || autorKnjige.Text.Equals("") || godinaIzdanjaKnjige.Text.Equals(""))

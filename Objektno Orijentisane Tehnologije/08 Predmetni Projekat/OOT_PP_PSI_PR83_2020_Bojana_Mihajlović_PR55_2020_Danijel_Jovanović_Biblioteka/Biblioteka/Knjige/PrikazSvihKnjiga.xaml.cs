@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,8 +32,7 @@ namespace Biblioteka.Knjige
         {
             List<Knjiga> pretrazeno = new List<Knjiga>();
             string unos = (sender as TextBox).Text;
-            //unos.Replace(" ", "");
-            unos.Trim();
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Knjiga k in App.SveKnjige)
             {

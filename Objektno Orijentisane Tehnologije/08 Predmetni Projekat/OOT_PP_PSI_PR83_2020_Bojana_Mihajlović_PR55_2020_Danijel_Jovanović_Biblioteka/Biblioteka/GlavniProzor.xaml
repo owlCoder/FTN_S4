@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
        Title="Biblioteka | Predmetni Projekat 2021/22" Height="600" Width="1100" Icon="Slike/ikonica.ico" WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Slike/bg.png" Stretch="UniformToFill"/>

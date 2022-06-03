@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,7 @@ namespace Biblioteka.Korisnici
             dataGridSviKorisnici.ItemsSource = App.SviKorisnici;
             #endregion
         }
+		
         private void dataGridSviKorisnici_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
@@ -57,7 +59,7 @@ namespace Biblioteka.Korisnici
 
             List<Korisnici.Korisnik> pretrazeno = new List<Korisnici.Korisnik>();
             string unos = (sender as TextBox).Text;
-            //unos.Replace(" ", "");
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Korisnici.Korisnik k in App.SviKorisnici)
             {

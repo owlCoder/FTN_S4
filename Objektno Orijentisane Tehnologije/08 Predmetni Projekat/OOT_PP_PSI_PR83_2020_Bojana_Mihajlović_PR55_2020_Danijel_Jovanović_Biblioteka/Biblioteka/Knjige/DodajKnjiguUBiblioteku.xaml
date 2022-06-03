@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DodajKnjiguUBiblioteku">
-    <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 70">
+    
+	<Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="20, 20, 20, 20" Margin="80 70 80 70">
         <Grid>
 
             <Grid.ColumnDefinitions>
@@ -50,4 +51,5 @@
 
         </Grid>
     </Border>
+	
 </Page>

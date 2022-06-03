@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,7 @@ namespace Biblioteka.Biblioteke
 
             List<Korisnici.Korisnik> pretrazeno = new List<Korisnici.Korisnik>();
             string unos = (sender as TextBox).Text;
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Korisnici.Korisnik k in App.SelektovanaBiblioteka.Korisnici)
             {

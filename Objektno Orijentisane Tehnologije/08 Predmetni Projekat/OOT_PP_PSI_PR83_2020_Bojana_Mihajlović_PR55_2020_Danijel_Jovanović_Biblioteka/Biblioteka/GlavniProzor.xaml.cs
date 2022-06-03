@@ -34,6 +34,7 @@ namespace Biblioteka
         {
             aktivnost.Source = new Uri("/Biblioteke/IzmenaBiblioteke.xaml", UriKind.Relative);
         }
+		
         private void pregledKorinsikaPoBiblioteci_Click(object sender, RoutedEventArgs e)
         {
             aktivnost.Source = new Uri("/Biblioteke/SpisakBibliotekaPoKorisniku.xaml", UriKind.Relative);

@@ -40,4 +40,5 @@
             <TextBlock Text="Verzija Programa: 2022.6.5_stable" FontSize="14" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold" Margin="20 0 0 5" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         </Grid>
     </Border>
+	
 </Page>

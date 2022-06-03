@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,11 +27,12 @@ namespace Biblioteka.Korisnici
             dataGridSviKorisnici.ItemsSource = App.SviKorisnici;
             #endregion
         }
+		
         private void pretraga_TextChanged(object sender, TextChangedEventArgs e)
         {
             List<Korisnik> pretrazeno = new List<Korisnik>();
             string unos = (sender as TextBox).Text;
-            //unos.Replace(" ", "");
+            unos = Regex.Replace(unos, @"\s+", " ");
 
             foreach (Korisnik k in App.SviKorisnici)
             {

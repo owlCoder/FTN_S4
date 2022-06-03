@@ -29,4 +29,5 @@
             <Button Content="IZMENA PODATAKA O KORISNIKU" Name="izmeniKorisnikaBtn" Click="izmeniKorisnikaBtn_Click" Width="400" FontWeight="Bold" FontSize="20" Margin="0 10 0 0"/>
         </StackPanel>
     </Border>
+	
 </Window>

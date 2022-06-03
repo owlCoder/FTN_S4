@@ -57,6 +57,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+
         public string Autor
         {
             get
@@ -73,6 +74,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+
         public int GodinaIzdanja
         {
             get
@@ -89,6 +91,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+
         public string NijeDodata
         {
             get
@@ -105,6 +108,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+
         public int IdBiblioteke
         {
             get
@@ -121,6 +125,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+
         public int IdKorisnika
         {
             get
@@ -137,6 +142,7 @@ namespace Biblioteka.Knjige
                 }
             }
         }
+		
         public int IdKnjige
         {
             get

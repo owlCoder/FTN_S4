@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Korisnici Po Biblioteci" Height="500" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="0">
+    
+	<Border Background="White" BorderBrush="White" BorderThickness="0" CornerRadius="0">
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -41,4 +42,5 @@
             </DataGrid>
         </Grid>
     </Border>
+	
 </Window>

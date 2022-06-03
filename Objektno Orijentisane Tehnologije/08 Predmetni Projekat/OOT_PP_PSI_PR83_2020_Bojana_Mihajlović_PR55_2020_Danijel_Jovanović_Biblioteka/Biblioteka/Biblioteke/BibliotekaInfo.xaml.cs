@@ -17,6 +17,7 @@ namespace Biblioteka.Biblioteke
     public partial class BibliotekaInfo : Window
     {
         private static string trenutnaPutanja = string.Empty;
+		
         public BibliotekaInfo()
         {
             InitializeComponent();

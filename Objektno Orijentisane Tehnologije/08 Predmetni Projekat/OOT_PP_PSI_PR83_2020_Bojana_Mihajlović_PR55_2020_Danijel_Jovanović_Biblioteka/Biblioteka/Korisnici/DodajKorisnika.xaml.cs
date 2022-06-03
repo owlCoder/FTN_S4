@@ -18,10 +18,12 @@ namespace Biblioteka.Korisnici
     public partial class DodajKorisnika : Page
     {
         private string trenutnaPutanja = string.Empty;
+
         public DodajKorisnika()
         {
             InitializeComponent();
         }
+
         private void slikaKorisnika_Click(object sender, RoutedEventArgs e)
         {
             Program.OdabirPutanjeDatoteke odabir = new Program.OdabirPutanjeDatoteke();
@@ -54,7 +56,6 @@ namespace Biblioteka.Korisnici
                 jmbgKorisnika.Clear();
                 trenutnaPutanja = string.Empty;
             }
-
         }
     }
 }
