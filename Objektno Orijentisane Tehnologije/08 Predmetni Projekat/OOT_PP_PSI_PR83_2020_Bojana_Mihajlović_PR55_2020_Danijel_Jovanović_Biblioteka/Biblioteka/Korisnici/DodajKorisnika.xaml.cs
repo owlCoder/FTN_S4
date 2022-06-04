@@ -32,15 +32,30 @@ namespace Biblioteka.Korisnici
 
         private void dodajKorisnikaBtn_Click(object sender, RoutedEventArgs e)
         {
+            
+
             if (imeKorisnika.Text.Equals("") || prezimeKorisnika.Text.Equals("") || jmbgKorisnika.Text.Equals("") || trenutnaPutanja.Equals(""))
             {
                 MessageBox.Show("Niste popunili sva polja!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
+                // Zaštita za JMBG (long prima više od 10 cifara)
+                long broj = 0;
+                    
                 try
                 {
-                    Korisnik novi = new Korisnik(imeKorisnika.Text, prezimeKorisnika.Text, jmbgKorisnika.Text, trenutnaPutanja, "NIJE");
+                    broj = long.Parse(jmbgKorisnika.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Niste uneli broj!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                try
+                {
+                    Korisnik novi = new Korisnik(imeKorisnika.Text, broj.ToString(), jmbgKorisnika.Text, trenutnaPutanja, "NIJE");
                     App.SviKorisnici.Add(novi);
                     slika.Source = new BitmapImage(new Uri("/Slike/placeholder.png", UriKind.Relative));
                 }

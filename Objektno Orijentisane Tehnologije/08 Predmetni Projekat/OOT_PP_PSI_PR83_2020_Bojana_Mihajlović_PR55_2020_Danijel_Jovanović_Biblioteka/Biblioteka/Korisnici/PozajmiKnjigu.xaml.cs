@@ -66,6 +66,8 @@ namespace Biblioteka.Korisnici
         private void pozajmiKnjiguBtn_Click(object sender, RoutedEventArgs e)
         {
             App.SelektovanaKnjiga = dataGridDostupneKnjige.SelectedItem as Knjige.Knjiga;
+
+            // Odnosi se na korisnika - u kojoj je biblioteci učlanjen
             Biblioteke.Biblioteka clanstvo = null;
 
             if (App.Biblioteke == null || App.SelektovaniKorisnik == null)
@@ -79,6 +81,7 @@ namespace Biblioteka.Korisnici
                 return;
             }
 
+            // Pronalazimo u kojoj je biblioteci korisnik
             foreach (Biblioteke.Biblioteka b in App.Biblioteke)
             {
                 if (b.IdBiblioteke == App.SelektovaniKorisnik.IdBiblioteke)
@@ -98,6 +101,7 @@ namespace Biblioteka.Korisnici
             {
                 if (k.IdKnjige == idSelektovane)
                 {
+                    k.NijeDodata = clanstvo.Naziv;
                     clanstvo.Knjige.Remove(k);
                     break;
                 }

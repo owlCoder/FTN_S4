@@ -117,6 +117,7 @@ namespace Biblioteka.Program
                             {
                                 int randomId = samples.Nasumican.Next(1, App.Biblioteke.Count);
                                 nova.IdBiblioteke = randomId;
+                                nova.NijeDodata = App.Biblioteke[randomId].Naziv;
                                 App.Biblioteke[randomId].Knjige.Add(nova);
                                 App.SveKnjige.Add(nova);
                             }

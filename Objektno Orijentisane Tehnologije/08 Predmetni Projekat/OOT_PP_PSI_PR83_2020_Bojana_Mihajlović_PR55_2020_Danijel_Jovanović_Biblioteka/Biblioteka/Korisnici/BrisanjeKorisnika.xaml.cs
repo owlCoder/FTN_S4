@@ -50,6 +50,9 @@ namespace Biblioteka.Korisnici
                 App.SviKorisnici.Remove(korisnik);
                 MessageBox.Show("Korisnik je obrisan iz kolekcije!", "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            // Ažuriranje prikaza liste posle brisanja
+            dataGridSviKorisnici.ItemsSource = App.SviKorisnici;
         }
 
         private void pretraga_TextChanged(object sender, TextChangedEventArgs e)

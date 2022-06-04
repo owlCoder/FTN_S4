@@ -62,10 +62,36 @@ namespace Biblioteka.Korisnici
             {
                 if (App.SelektovaniKorisnik != null)
                 {
+                    // Zaštita za JMBG (long može više od 10 cifara)
+                    long broj = 0;
+
+                    try
+                    {
+                        broj = long.Parse(jmbgKorisnika.Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Niste uneli broj!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Zaštita za datum
+                    DateTime datum = DateTime.Today;
+
+                    try
+                    {
+                        datum = DateTime.Parse(datumUclanjenjaKorisnika.Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Niste uneli dobar format datuma!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     App.SelektovaniKorisnik.Ime = imeKorisnika.Text;
                     App.SelektovaniKorisnik.Prezime = prezimeKorisnika.Text;
-                    App.SelektovaniKorisnik.Jmbg = jmbgKorisnika.Text;
-                    App.SelektovaniKorisnik.DatumUclanjenja = datumUclanjenjaKorisnika.Text;
+                    App.SelektovaniKorisnik.Jmbg = broj.ToString();
+                    App.SelektovaniKorisnik.DatumUclanjenja = datum.ToString("d");
                     App.SelektovaniKorisnik.ProfilnaSlika = trenutnaPutanja;
                     slika.Source = new BitmapImage(new Uri(trenutnaPutanja, UriKind.Absolute));
 

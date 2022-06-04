@@ -50,6 +50,9 @@ namespace Biblioteka.Knjige
                 App.SveKnjige.Remove(knjiga);
                 MessageBox.Show("Knjiga obrisana iz kolekcije!", "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            // Ažuriranje prikaza liste posle brisanja
+            dataGridSveKnjige.ItemsSource = App.SveKnjige;
         }
 
         private void pretraga_TextChanged(object sender, TextChangedEventArgs e)

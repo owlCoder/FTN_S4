@@ -70,7 +70,7 @@ namespace Biblioteka.Biblioteke
                     if (k.IdBiblioteke == biblioteka.IdBiblioteke)
                     {
                         k.IdBiblioteke = -1;
-                        k.DatumUclanjenja = "/";
+                        k.DatumUclanjenja = "";
                         k.Uclanjen = "/";
                     }
                 }
@@ -78,7 +78,7 @@ namespace Biblioteka.Biblioteke
                 foreach (Korisnici.Korisnik k in biblioteka.Korisnici)
                 {
                     k.IdBiblioteke = -1;
-                    k.DatumUclanjenja = "/";
+                    k.DatumUclanjenja = "";
                     k.Uclanjen = "/";
                 }
 
@@ -87,6 +87,9 @@ namespace Biblioteka.Biblioteke
                 App.Biblioteke.Remove(biblioteka);
 
                 MessageBox.Show("Biblioteka obrisana iz kolekcije!", "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Ažuriranje prikaza liste posle brisanja
+                dataGridSveBiblioteke.ItemsSource = App.Biblioteke;
             }
         }
 

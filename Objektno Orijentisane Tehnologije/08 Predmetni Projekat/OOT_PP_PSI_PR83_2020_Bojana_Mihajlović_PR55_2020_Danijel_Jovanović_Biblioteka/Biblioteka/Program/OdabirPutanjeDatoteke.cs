@@ -29,7 +29,7 @@ namespace Biblioteka.Program
             }
             else
             {
-                MessageBox.Show("Niste odabrali logo " + klasa + "!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Niste odabrali sliku " + klasa + "!", "Greška!", MessageBoxButton.OK, MessageBoxImage.Error);
                 logo.Source = new BitmapImage(new Uri("/Slike/placeholder.png", UriKind.Relative));
                 trenutnaPutanja = string.Empty;
             }
