@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <Label Name="naslov" HorizontalAlignment="Center" Content="ODABERITE DUPLIM KLIKOM BIBLIOTEKU ZA BRISANJE" FontSize="20" FontWeight="Bold"/>
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="10">
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="0">
                 <Label Content="Unesite ime biblioteke: " FontSize="16" FontWeight="Bold" />
                 <TextBox Name="pretraga" FontSize="16" TextChanged="pretraga_TextChanged" />
             </StackPanel>
