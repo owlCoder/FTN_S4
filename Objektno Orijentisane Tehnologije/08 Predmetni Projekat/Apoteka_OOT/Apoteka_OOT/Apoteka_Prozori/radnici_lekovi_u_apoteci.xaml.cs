@@ -66,6 +66,10 @@ namespace Apoteka_OOT.Apoteka_Prozori
                         ir.ShowDialog();
                         MainWindow.Referenca_na_odabranog_radnika = null;
                     }
+                    else
+                    {
+                        MessageBox.Show("Odaberite radnika iz liste kako bi pristupili izmeni!", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
                 else if(odabrani_radnik.SelectedIndex == 1)
                 {
@@ -90,6 +94,7 @@ namespace Apoteka_OOT.Apoteka_Prozori
                     }
                 }
             }
+            svi_radnici.SelectedItem = null;
         }
         private void operacije_sa_lekom_Click(object sender, RoutedEventArgs e)
         {
@@ -103,6 +108,11 @@ namespace Apoteka_OOT.Apoteka_Prozori
                         Lek_Prozori.izmeni_lek il = new Lek_Prozori.izmeni_lek();
                         il.ShowDialog();
                         MainWindow.Referenca_na_odabrani_lek = null;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Odaberite lek iz liste kako bi pristupili izmeni!", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
                     }
                 }
                 else if (odabrani_lek.SelectedIndex == 1)
@@ -128,6 +138,7 @@ namespace Apoteka_OOT.Apoteka_Prozori
                     }
                 }
             }
+            svi_lekovi.SelectedItem = null;
         }
 
         private void pretraga_radnika_TextChanged(object sender, TextChangedEventArgs e)

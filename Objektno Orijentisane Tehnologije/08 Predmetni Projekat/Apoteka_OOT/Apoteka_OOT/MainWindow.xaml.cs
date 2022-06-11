@@ -223,6 +223,7 @@ namespace Apoteka_OOT
                         MessageBox.Show("Niste odabrali apoteku!", "Upozorenje!", MessageBoxButton.OK, MessageBoxImage.Warning);                    
                 }
             }
+            sve_apoteke.SelectedItem = null;
         }
 
         private void operacije_sa_radnikom_Click(object sender, RoutedEventArgs e)
@@ -305,6 +306,7 @@ namespace Apoteka_OOT
                     }
                 }
             }
+            svi_radnici.SelectedItem = null;
         }
 
         private void operacije_sa_lekom_Click(object sender, RoutedEventArgs e)
@@ -386,6 +388,7 @@ namespace Apoteka_OOT
                     }
                 }
             }
+            svi_lekovi.SelectedItem = null;
         }
 
         private void pretraga_apoteka_TextChanged(object sender, TextChangedEventArgs e)
